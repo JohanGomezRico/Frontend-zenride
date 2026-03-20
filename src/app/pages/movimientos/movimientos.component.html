@@ -1,0 +1,174 @@
+<div class="flex-grow pb-12 px-6 md:px-12 max-w-7xl mx-auto w-full">
+  <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+  <div class="max-w-2xl">
+  <div class="flex items-center gap-2 mb-2">
+  <span class="material-symbols-outlined text-primary">inventory_2</span>
+  <span class="text-label-sm font-bold uppercase tracking-widest text-primary">Operations Center</span>
+  </div>
+  <h1 class="text-5xl font-black tracking-tighter text-on-surface mb-4">Register Movement</h1>
+  <p class="text-on-surface-variant text-lg leading-relaxed">Log new bicycle stock arrivals or sales exits into the <span class="font-semibold text-on-surface">inventario_movimientos</span> master record.</p>
+  </div>
+  <div class="flex gap-3">
+  <button class="flex items-center gap-2 px-6 py-3 rounded-full bg-secondary-container text-on-secondary-container font-bold hover:bg-secondary-fixed-dim transition-all">
+  <span class="material-symbols-outlined">history</span>
+                      View Logs
+                  </button>
+  </div>
+  </header>
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+  <div class="lg:col-span-8 bg-surface-container-lowest p-8 md:p-12 rounded-xl shadow-sm">
+  <form class="space-y-10">
+  <section>
+  <div class="flex items-center gap-3 mb-8">
+  <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+  <span class="material-symbols-outlined text-primary">pedal_bike</span>
+  </div>
+  <h2 class="text-2xl font-bold tracking-tight">Bicycle Selection</h2>
+  </div>
+  <div class="grid grid-cols-1 gap-6">
+  <div class="group">
+  <label class="block text-sm font-bold uppercase tracking-wider text-on-surface-variant mb-2 ml-1">Select Bicycle Model</label>
+  <div class="relative">
+  <select class="w-full bg-surface-container-low border-none rounded-lg py-4 pl-4 pr-10 text-on-surface font-medium appearance-none focus:ring-2 focus:ring-primary/40 transition-all">
+  <option disabled="" selected="" value="">Choose from active inventory...</option>
+  
+  @for (bici of listaBicicletas; track bici.idBicicleta) {
+    <option [value]="bici.idBicicleta">
+      {{ bici.codigoBicicleta }} - {{ bici.marcaBicicleta }} {{ bici.modeloBicicleta }}
+    </option>
+  }
+  
+  </select>
+  <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+  </div>
+  </div>
+  </div>
+  </section>
+  <section>
+  <div class="flex items-center gap-3 mb-8 pt-4">
+  <div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center">
+  <span class="material-symbols-outlined text-tertiary">swap_horiz</span>
+  </div>
+  <h2 class="text-2xl font-bold tracking-tight">Transaction Details</h2>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  <div>
+  <label class="block text-sm font-bold uppercase tracking-wider text-on-surface-variant mb-4 ml-1">Movement Type</label>
+  <div class="grid grid-cols-2 gap-3">
+  <label class="relative cursor-pointer">
+  <input checked="" class="peer sr-only" name="movement_type" type="radio" value="entrance"/>
+  <div class="flex flex-col items-center justify-center p-4 rounded-xl bg-surface-container-low border-2 border-transparent peer-checked:border-primary peer-checked:bg-primary-container/20 transition-all">
+  <span class="material-symbols-outlined text-3xl mb-1 text-on-surface-variant peer-checked:text-primary">login</span>
+  <span class="font-bold text-sm">Entrance</span>
+  </div>
+  </label>
+  <label class="relative cursor-pointer">
+  <input class="peer sr-only" name="movement_type" type="radio" value="exit"/>
+  <div class="flex flex-col items-center justify-center p-4 rounded-xl bg-surface-container-low border-2 border-transparent peer-checked:border-error peer-checked:bg-error-container/10 transition-all">
+  <span class="material-symbols-outlined text-3xl mb-1 text-on-surface-variant peer-checked:text-error">logout</span>
+  <span class="font-bold text-sm">Exit</span>
+  </div>
+  </label>
+  </div>
+  </div>
+  <div>
+  <label class="block text-sm font-bold uppercase tracking-wider text-on-surface-variant mb-4 ml-1">Quantity</label>
+  <div class="flex items-center gap-4 bg-surface-container-low p-2 rounded-xl">
+  <button class="w-12 h-12 flex items-center justify-center rounded-lg bg-surface hover:bg-white transition-all text-on-surface shadow-sm" type="button">
+  <span class="material-symbols-outlined">remove</span>
+  </button>
+  <input class="flex-grow bg-transparent border-none text-center text-xl font-black focus:ring-0" min="1" type="number" value="1"/>
+  <button class="w-12 h-12 flex items-center justify-center rounded-lg bg-primary text-on-primary hover:bg-primary-dim transition-all shadow-md" type="button">
+  <span class="material-symbols-outlined">add</span>
+  </button>
+  </div>
+  </div>
+  </div>
+  </section>
+  <section>
+  <div class="flex items-center gap-3 mb-8 pt-4">
+  <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center">
+  <span class="material-symbols-outlined text-secondary">person</span>
+  </div>
+  <h2 class="text-2xl font-bold tracking-tight">Administrative Context</h2>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+  <div>
+  <label class="block text-sm font-bold uppercase tracking-wider text-on-surface-variant mb-2 ml-1">Responsible Person</label>
+  <input class="w-full bg-surface-container-low border-none rounded-lg py-4 px-4 focus:ring-2 focus:ring-primary/40 transition-all" placeholder="Full name or ID..." type="text"/>
+  </div>
+  <div>
+  <label class="block text-sm font-bold uppercase tracking-wider text-on-surface-variant mb-2 ml-1">Transaction Date</label>
+  <div class="relative">
+  <input class="w-full bg-surface-container-low border-none rounded-lg py-4 px-4 focus:ring-2 focus:ring-primary/40 transition-all" type="date"/>
+  </div>
+  </div>
+  </div>
+  <div>
+  <label class="block text-sm font-bold uppercase tracking-wider text-on-surface-variant mb-2 ml-1">Detailed Description</label>
+  <textarea class="w-full bg-surface-container-low border-none rounded-lg p-4 focus:ring-2 focus:ring-primary/40 transition-all resize-none" placeholder="Reason for movement, shipping reference, or customer details..." rows="4"></textarea>
+  </div>
+  </section>
+  <div class="pt-6 border-t border-outline-variant/10">
+  <button class="w-full bg-primary text-on-primary py-5 rounded-full font-black text-xl tracking-tight uppercase flex items-center justify-center gap-3 shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all" type="submit">
+                              Register Movement
+                              <span class="material-symbols-outlined">arrow_forward</span>
+  </button>
+  </div>
+  </form>
+  </div>
+  <div class="lg:col-span-4 space-y-8">
+  <div class="bg-inverse-surface text-white p-8 rounded-xl relative overflow-hidden">
+  <div class="relative z-10">
+  <span class="inline-block px-3 py-1 rounded-full bg-primary text-on-primary text-[10px] font-black uppercase tracking-widest mb-4">System Live</span>
+  <h3 class="text-2xl font-bold mb-2">Inventory Integrity</h3>
+  <p class="text-zinc-400 text-sm mb-6 leading-relaxed">All movements are recorded with a unique timestamp and associated with the admin UUID for security auditing.</p>
+  <div class="space-y-4">
+  <div class="flex items-center justify-between text-sm">
+  <span class="text-zinc-500">Current Stock Total</span>
+  <span class="font-mono font-bold">1,248 Units</span>
+  </div>
+  <div class="flex items-center justify-between text-sm">
+  <span class="text-zinc-500">Pending Approvals</span>
+  <span class="font-mono font-bold text-tertiary-fixed">0</span>
+  </div>
+  <div class="w-full bg-zinc-800 h-1 rounded-full overflow-hidden">
+  <div class="bg-primary h-full w-3/4"></div>
+  </div>
+  </div>
+  </div>
+  <div class="absolute -right-12 -bottom-12 opacity-10">
+  <span class="material-symbols-outlined text-[160px]" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+  </div>
+  </div>
+  <div class="bg-surface-container-low p-6 rounded-xl">
+  <h3 class="text-lg font-black uppercase tracking-tighter mb-6">Recent Records</h3>
+  <div class="space-y-6">
+  <div class="flex gap-4">
+  <div class="w-2 h-12 bg-primary rounded-full"></div>
+  <div>
+  <p class="font-bold text-sm">Stock Entrance</p>
+  <p class="text-xs text-on-surface-variant">20x Zenith Pro Carbon</p>
+  <p class="text-[10px] uppercase font-bold text-zinc-400 mt-1">2 hours ago</p>
+  </div>
+  </div>
+  <div class="flex gap-4">
+  <div class="w-2 h-12 bg-error rounded-full"></div>
+  <div>
+  <p class="font-bold text-sm">Sale Exit</p>
+  <p class="text-xs text-on-surface-variant">1x FlowState Gravel</p>
+  <p class="text-[10px] uppercase font-bold text-zinc-400 mt-1">5 hours ago</p>
+  </div>
+  </div>
+  </div>
+  </div>
+  <div class="p-6 rounded-xl border-2 border-dashed border-outline-variant/30 flex items-center gap-4">
+  <span class="material-symbols-outlined text-zinc-400 text-3xl">help_outline</span>
+  <div>
+  <p class="text-sm font-bold">Need help?</p>
+  <a class="text-xs text-primary font-bold hover:underline" href="#">Contact System Admin</a>
+  </div>
+  </div>
+  </div>
+  </div>
+</div>

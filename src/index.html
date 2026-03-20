@@ -1,13 +1,39 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
   <meta charset="utf-8">
-  <title>ZenrideWeb</title>
+  <title>Frontend Zenride</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <script id="tailwind-config">
+    // Aquí va toda tu configuración de tailwind.config que me pasaste...
+    // (Pega aquí exactamente el mismo script de tailwind.config que tienes en tu código)
+    tailwind.config = {
+        darkMode: "class",
+        // ... (resto de tus colores y temas)
+    }
+  </script>
+  
+  <style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+    }
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #f9f6f5;
+        color: #2f2e2e;
+    }
+    /* Resto de tu CSS para .custom-range */
+  </style>
 </head>
-<body>
+<body class="bg-surface text-on-surface font-body">
   <app-root></app-root>
 </body>
 </html>

@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+// Importamos RouterOutlet (para inyectar las páginas) y RouterLink (para los botones del menú)
+import { RouterOutlet, RouterLink } from '@angular/router'; 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink], 
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'zenride-web';
+  // Queda vacío porque este es solo el esqueleto de la aplicación
 }

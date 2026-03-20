@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+/* =========================================
+   ESTILOS GLOBALES - ZENRIDE
+   ========================================= */
+
+/* Configuración de los íconos de Google Material */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+}
+
+/* Tipografía y colores base para toda la app */
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #f9f6f5;
+    color: #2f2e2e;
+}
+
+/* Aplicar la fuente destacada a todos los títulos de la app */
+h1, h2, h3 { 
+    font-family: 'Space Grotesk', sans-serif; 
+}
