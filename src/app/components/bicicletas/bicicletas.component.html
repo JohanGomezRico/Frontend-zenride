@@ -1,0 +1,106 @@
+<div class="container mt-4">
+  <h2 class="text-center">Gestión de Bicicletas - ZenRide</h2>
+
+  <form [formGroup]="bicicletasForm" (ngSubmit)="onSubmit()" class="formulario-bicicletas shadow p-3 mb-5 bg-body-tertiary rounded">
+    <div class="field-group">
+      <mat-form-field appearance="fill">
+        <mat-label>Código</mat-label>
+        <input matInput autocomplete="off" formControlName="codigo">
+        <mat-error *ngIf="bicicletasForm.get('codigo')?.invalid">Obligatorio</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Marca</mat-label>
+        <input matInput formControlName="marca">
+        <mat-error *ngIf="bicicletasForm.get('marca')?.invalid">Obligatorio</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Modelo</mat-label>
+        <input matInput formControlName="modelo">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Precio de Venta</mat-label>
+        <input type="number" matInput formControlName="precioVenta">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Tipo de Bicicleta</mat-label>
+        <mat-select formControlName="tipo">
+          <mat-option value="Montaña">Montaña</mat-option>
+          <mat-option value="Ruta">Ruta</mat-option>
+          <mat-option value="Urbana">Urbana</mat-option>
+          <mat-option value="Electrica">Electrica</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 text-center">
+      <button type="submit" mat-raised-button color="primary" [disabled]="bicicletasForm.invalid">
+        CREAR BICICLETA
+      </button>
+    </div>
+  </form>
+
+  <hr class="divisor">
+
+  <div class="search-container">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Buscar por Código</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput [(ngModel)]="filtroCodigo" placeholder="Ej: BK-100">
+    </mat-form-field>
+  </div>
+
+  <div class="tabla-contenedor">
+    <table mat-table [dataSource]="bicicletasFiltradas" class="mat-elevation-z8 w-100">
+      
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let b"> {{b.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="codigo">
+        <th mat-header-cell *matHeaderCellDef> Código </th>
+        <td mat-cell *matCellDef="let b"> {{b.codigo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="marca">
+        <th mat-header-cell *matHeaderCellDef> Marca </th>
+        <td mat-cell *matCellDef="let b"> {{b.marca}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="modelo">
+        <th mat-header-cell *matHeaderCellDef> Modelo </th>
+        <td mat-cell *matCellDef="let b"> {{b.modelo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="precioVenta">
+        <th mat-header-cell *matHeaderCellDef> Precio </th>
+        <td mat-cell *matCellDef="let b"> {{b.precioVenta | currency}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tipo">
+        <th mat-header-cell *matHeaderCellDef> Tipo </th>
+        <td mat-cell *matCellDef="let b"> {{b.tipo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let b">
+          <button mat-icon-button color="warn" (click)="eliminarBicicleta(b.id)" title="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    
+    <div *ngIf="bicicletasFiltradas.length === 0" class="sin-datos">
+      No hay bicicletas con ese código.
+    </div>
+  </div>
+</div>

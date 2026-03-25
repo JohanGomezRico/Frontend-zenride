@@ -1,0 +1,79 @@
+<div class="container mt-4">
+  <h2 class="text-center">Gestión de Clientes - ZenRide</h2>
+
+  <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()" class="row g-3 shadow p-3 mb-5 bg-body-tertiary rounded">
+    <div class="col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Cédula</mat-label>
+        <input matInput formControlName="documento">
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Nombre Completo</mat-label>
+        <input matInput formControlName="nombre">
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="telefono">
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="correo">
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 text-center">
+      <button mat-raised-button color="primary" type="submit" [disabled]="clienteForm.invalid">
+        GUARDAR CLIENTE
+      </button>
+    </div>
+  </form>
+
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Buscar por Cédula</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput [(ngModel)]="filtroCedula" placeholder="Escriba el documento...">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <table mat-table [dataSource]="clientesFiltrados" class="mat-elevation-z8 w-100">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let c"> {{c.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="documento">
+      <th mat-header-cell *matHeaderCellDef> Cédula </th>
+      <td mat-cell *matCellDef="let c"> {{c.documento}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let c"> {{c.nombre}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="telefono">
+      <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+      <td mat-cell *matCellDef="let c"> {{c.telefono}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="correo">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let c"> {{c.correo}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
