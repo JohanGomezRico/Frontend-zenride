@@ -1,0 +1,198 @@
+// --- VARIABLES DE COLOR (Basadas en ZenRide Premium) ---
+$bg-color: #f7f6f2;        // Fondo crema suave
+$dark-nav: #111111;        // Negro profundo
+$accent-green: #c8f542;    // Verde neón de ZenRide
+$text-muted: #8a8a85;      // Gris para textos secundarios
+$border-color: #e0ddd7;    // Color de bordes finos
+
+.main-container {
+  font-family: 'DM Sans', sans-serif;
+  background-color: $bg-color;
+  min-height: 100vh;
+}
+
+// --- HERO SECTION (ENCABEZADO) ---
+.hero {
+  position: relative;
+  height: 380px;
+  background: url('https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=1800&q=80') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
+  }
+
+  .hero-content {
+    position: relative; z-index: 1;
+
+    // NUEVO: Estilo para el logo de la empresa en el Hero
+    .brand-logo-container {
+      margin-bottom: 20px;
+      .main-logo {
+        height: 70px;
+        width: auto;
+        filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.3));
+      }
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 700;
+      margin-bottom: 30px;
+      letter-spacing: -1px;
+    }
+  }
+}
+
+.hero-categories {
+  display: flex; gap: 40px; justify-content: center;
+  .h-cat {
+    cursor: pointer; opacity: 0.5; transition: 0.3s;
+    &.active, &:hover { 
+        opacity: 1; 
+        .h-cat-name { color: $accent-green; border-bottom: 2px solid $accent-green; } 
+    }
+    .h-cat-name { 
+      display: block; font-size: 0.75rem; font-weight: 700; 
+      letter-spacing: 2px; padding-bottom: 8px; margin-bottom: 5px;
+    }
+    .h-cat-count { font-size: 0.65rem; color: #ccc; }
+  }
+}
+
+// --- LAYOUT Y BREADCRUMB ---
+.breadcrumb { 
+  padding: 18px 50px; background: white; font-size: 0.75rem; 
+  color: #999; border-bottom: 1px solid #eee;
+  .active { color: #111; font-weight: 600; }
+}
+
+.content-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  padding: 40px 50px;
+  gap: 50px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+// --- SIDEBAR (FILTROS) ---
+.sidebar {
+  .search-box {
+    background: white; border: 1px solid $border-color; border-radius: 10px;
+    padding: 12px 15px; display: flex; align-items: center; margin-bottom: 30px;
+    input { border: none; outline: none; margin-left: 10px; width: 100%; font-size: 0.85rem; }
+    mat-icon { color: $text-muted; font-size: 20px; }
+  }
+}
+
+.section-label { font-size: 0.65rem; font-weight: 800; letter-spacing: 1.5px; color: $text-muted; margin-bottom: 20px; }
+
+.cat-list {
+  list-style: none; padding: 0;
+  li {
+    display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid #e9e9e9;
+    cursor: pointer; font-size: 0.85rem; color: #444; transition: 0.2s;
+    &:hover, &.active { font-weight: 700; color: black; }
+    .badge { margin-left: auto; background: #111; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.65rem; }
+  }
+}
+
+.dot {
+  width: 8px; height: 8px; border-radius: 50%; margin-right: 15px;
+  &.grey { background: #888; }
+  &.montaña { background: #3b82f6; }
+  &.ruta { background: #f59e0b; }
+  &.urbana { background: #8b5cf6; }
+  &.electrica { background: #84cc16; }
+}
+
+// --- GRILLA Y TARJETAS (CARDS) ---
+.toolbar {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;
+  .results { font-size: 0.85rem; color: $text-muted; }
+  .actions { display: flex; gap: 15px; align-items: center; }
+  .sort-select { padding: 8px 15px; border-radius: 8px; border: 1px solid $border-color; font-size: 0.8rem; background: white; }
+  .view-icons { display: flex; gap: 5px; mat-icon { font-size: 20px; color: #ccc; cursor: pointer; &.active { color: #111; } } }
+}
+
+.bici-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.bici-card {
+  background: white; border-radius: 18px; border: 1px solid $border-color; 
+  overflow: hidden; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: flex; flex-direction: column;
+  
+  &:hover { 
+    transform: translateY(-8px); 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08); 
+    .card-header img { transform: scale(1.08); }
+  }
+
+  .card-header {
+    height: 240px; position: relative; background: #f0ede8; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+
+    // MODIFICADO: Optimización para las 20 imágenes de bicicletas
+    img { 
+      width: 90%; 
+      height: 90%; 
+      object-fit: contain; // Mantiene la proporción sin estirar la bici
+      transition: 0.6s; 
+      mix-blend-mode: multiply; // Integra el fondo blanco de la foto con el fondo de la card
+    }
+    
+    .type-tag { 
+      position: absolute; top: 15px; left: 15px; z-index: 2;
+      background: rgba(255,255,255,0.9); padding: 5px 12px; 
+      border-radius: 6px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.5px;
+    }
+    
+    .fav-btn { 
+      position: absolute; top: 15px; right: 15px; z-index: 2;
+      background: white; border: none; border-radius: 50%; width: 34px; height: 34px; 
+      display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      cursor: pointer; transition: 0.2s;
+      &:hover { color: #e74c3c; transform: scale(1.1); }
+    }
+  }
+
+  .card-body {
+    padding: 24px; flex-grow: 1;
+    .brand-small { font-size: 0.6rem; color: $text-muted; font-weight: 800; letter-spacing: 1.2px; }
+    .model-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin: 8px 0; font-weight: 700; color: #111; }
+    .type-text { font-size: 0.8rem; color: $text-muted; margin-bottom: 20px; }
+  }
+}
+
+.card-footer {
+  display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;
+  .price { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; }
+  .stock { 
+    text-align: right; 
+    .stock-val { display: block; font-size: 1.5rem; font-weight: 700; color: #4a7c59; &.low { color: #c0392b; } }
+    .stock-label { font-size: 0.55rem; color: $text-muted; font-weight: 800; }
+  }
+}
+
+.btn-details {
+  width: 100%; background: $dark-nav; color: white; border: none; padding: 14px;
+  border-radius: 10px; font-weight: 700; font-size: 0.75rem; letter-spacing: 1px;
+  cursor: pointer; transition: 0.3s;
+  &:hover { background: #2a2a28; transform: scale(0.98); }
+}
+
+.no-results {
+  grid-column: 1 / -1; text-align: center; padding: 100px 0; color: $text-muted;
+  mat-icon { font-size: 48px; width: 48px; height: 48px; margin-bottom: 15px; opacity: 0.3; }
+}
