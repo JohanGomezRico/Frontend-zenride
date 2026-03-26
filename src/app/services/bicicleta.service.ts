@@ -13,7 +13,7 @@ export class BicicletaService {
   constructor(private http: HttpClient) { }
 
   getBicicletas(): Observable<Bicicleta[]> {
-    return this.http.get<Bicicleta[]>(`${this.apiUrl}/bicicletas`); 
+    return this.http.get<Bicicleta[]>(`${this.apiUrl}/api/bicicletas`); 
   }
 
   createBicicleta(bicicleta: Bicicleta): Observable<Bicicleta> {

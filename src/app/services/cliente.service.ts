@@ -13,7 +13,7 @@ export class ClienteService {
 
   // GET: http://localhost:8089/api/clientes
   getClientes(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(`${this.apiUrl}api/clientes`);
+    return this.http.get<Cliente[]>(`${this.apiUrl}/api/clientes`);
   }
 
   // POST: http://localhost:8089/api/clientes
