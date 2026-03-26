@@ -1,4 +1,4 @@
 export const environment ={  
-    urlBackend: 'http://localhost:8089/api/',  
+    urlBackend: 'https://project-zenride-production.up.railway.app',  
 
 };
