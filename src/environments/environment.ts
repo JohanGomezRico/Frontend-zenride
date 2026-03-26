@@ -1,4 +1,4 @@
-export const environment ={  
-    urlBackend: 'https://project-zenride-production.up.railway.app',  
+export const environment = {  
+    urlBackend: 'https://project-zenride-production.up.railway.app' 
 
 };
