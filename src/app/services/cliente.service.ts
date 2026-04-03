@@ -9,15 +9,15 @@ import { environment } from '../../environments/environment';
 })
 export class ClienteService {
   private http = inject(HttpClient);
-  private apiUrl = environment.urlBackend; 
+  private apiUrl = environment.urlBackend;
 
   // GET: http://localhost:8089/api/clientes
   getClientes(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(`${this.apiUrl}/api/clientes`);
+    return this.http.get<Cliente[]>(`${this.apiUrl}api/clientes`);
   }
 
   // POST: http://localhost:8089/api/clientes
   createCliente(cliente: Cliente): Observable<Cliente> {
-    return this.http.post<Cliente>(`${this.apiUrl}/api/clientes`, cliente);
+    return this.http.post<Cliente>(`${this.apiUrl}api/clientes`, cliente);
   }
 }
