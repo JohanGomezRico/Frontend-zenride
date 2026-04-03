@@ -13,15 +13,15 @@ export class BicicletaService {
   constructor(private http: HttpClient) { }
 
   getBicicletas(): Observable<Bicicleta[]> {
-    return this.http.get<Bicicleta[]>(`${this.apiUrl}/bicicletas`); 
+    return this.http.get<Bicicleta[]>(`${this.apiUrl}api/bicicletas`); 
   }
 
   createBicicleta(bicicleta: Bicicleta): Observable<Bicicleta> {
-    return this.http.post<Bicicleta>(`${this.apiUrl}/bicicletas`, bicicleta); 
+    return this.http.post<Bicicleta>(`${this.apiUrl}api/bicicletas`, bicicleta); 
   }
 
   // Corregido: Agregada la ruta /bicicletas/id
   deleteBicicleta(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/bicicletas/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}api/bicicletas/${id}`);
   }
 }
