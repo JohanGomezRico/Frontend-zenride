@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -21,35 +21,52 @@ import { BicicletaService } from '../../services/bicicleta.service';
   styleUrl: './inventario-movimiento.component.scss'
 })
 export class InventarioMovimientoComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private inventarioService = inject(InventarioService);
+  private bicicletaService = inject(BicicletaService);
+
   movimientoForm: FormGroup;
   bicicletas: any[] = [];
   historial: any[] = [];
   
-  // Objeto para filtros múltiples (Texto, Tipo y Fecha)
   filtros = {
     texto: '',
-    tipo: '',
-    fecha: '' // Formato YYYY-MM-DD del input date
+    tipo: 'ENTRADA', // Por defecto solo mostrar entradas
+    fecha: '' 
   };
 
-  displayedColumns: string[] = ['fecha', 'bicicleta', 'tipo', 'cantidad', 'responsable', 'descripcion'];
+  displayedColumns: string[] = ['fecha', 'detalles', 'tipo', 'responsable', 'descripcion'];
 
-  constructor(
-    private fb: FormBuilder,
-    private inventarioService: InventarioService,
-    private bicicletaService: BicicletaService
-  ) {
+  constructor() {
     this.movimientoForm = this.fb.group({
-      bicicletaId: [null, [Validators.required]],
-      cantidad: [1, [Validators.required, Validators.min(1)]],
-      tipoMovimiento: ['ENTRADA', [Validators.required]], 
+      tipoMovimiento: ['ENTRADA', [Validators.required]], // Fijo en ENTRADA
       responsableOperacion: ['', [Validators.required]],  
-      descripcion: [''] 
+      descripcion: [''],
+      detalles: this.fb.array([]) 
     });
   }
 
   ngOnInit(): void {
     this.cargarDatos();
+    this.agregarFila();
+  }
+
+  get detalles() {
+    return this.movimientoForm.get('detalles') as FormArray;
+  }
+
+  agregarFila(): void {
+    const fila = this.fb.group({
+      bicicletaId: [null, [Validators.required]],
+      cantidad: [1, [Validators.required, Validators.min(1)]]
+    });
+    this.detalles.push(fila);
+  }
+
+  removerFila(index: number): void {
+    if (this.detalles.length > 1) {
+      this.detalles.removeAt(index);
+    }
   }
 
   cargarDatos(): void {
@@ -61,21 +78,15 @@ export class InventarioMovimientoComponent implements OnInit {
     this.inventarioService.getMovimientos().subscribe(res => this.historial = res || []);
   }
 
-  // Lógica de búsqueda MULTI-CRITERIO corregida para Fecha
   get historialFiltrado() {
     return this.historial.filter(m => {
-      // 1. Filtro por Texto (Código o Responsable)
       const cumpleTexto = !this.filtros.texto || 
-        m.bicicletaCodigo?.toLowerCase().includes(this.filtros.texto.toLowerCase()) ||
         m.responsableOperacion?.toLowerCase().includes(this.filtros.texto.toLowerCase());
 
-      // 2. Filtro por Tipo (Entrada / Salida)
       const cumpleTipo = !this.filtros.tipo || m.tipoMovimiento === this.filtros.tipo;
 
-      // 3. Filtro por Fecha (Comparación exacta YYYY-MM-DD)
       let cumpleFecha = true;
       if (this.filtros.fecha) {
-        // Extraemos solo la parte YYYY-MM-DD de la fecha que viene del backend
         const fechaMovimientoLimpia = m.fechaMovimiento?.substring(0, 10);
         cumpleFecha = fechaMovimientoLimpia === this.filtros.fecha;
       }
@@ -90,23 +101,23 @@ export class InventarioMovimientoComponent implements OnInit {
 
   guardar(): void {
     if (this.movimientoForm.valid) {
-      // Enviamos una copia limpia para asegurar que la descripción viaje bien
       const datosEnviar = { ...this.movimientoForm.value };
       
       this.inventarioService.registrarMovimiento(datosEnviar).subscribe({
         next: () => {
-          alert('¡Stock de ZenRide actualizado!');
+          alert('¡Lote de entrada procesado con éxito!');
           const resp = this.movimientoForm.value.responsableOperacion;
           
+          this.detalles.clear();
           this.movimientoForm.reset({ 
             tipoMovimiento: 'ENTRADA', 
-            cantidad: 1, 
             responsableOperacion: resp,
             descripcion: '' 
           });
+          this.agregarFila();
           this.cargarDatos();
         },
-        error: (err) => alert('Error: ' + (err.error?.message || 'No se pudo registrar'))
+        error: (err) => alert('Error: ' + (err.error?.message || 'No se pudo registrar el lote'))
       });
     }
   }
