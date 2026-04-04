@@ -16,7 +16,7 @@ export class InventarioService {
 
   registrarMovimiento(movimiento: any): Observable<any> {
     // return this.http.post<any>(this.apiUrl, movimiento);
-    return this.http.post<any>(`${this.apiUrl}api/movimiento`, movimiento);
+    return this.http.post<any>(`${this.apiUrl}api/inventario`, movimiento);
   }
 
   // 🚩 CORRECCIÓN AQUÍ: Añadimos '/movimientos' para que coincida con el @GetMapping del Controller
