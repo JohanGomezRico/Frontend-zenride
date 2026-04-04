@@ -1,0 +1,59 @@
+<div class="reportes-container">
+  
+  <div class="header-section">
+    <h1>PANEL DE REPORTES <span class="icon">📊</span></h1>
+    
+    <div class="filtros-card">
+      <div class="fechas-group">
+        <div class="input-group">
+          <label>Fecha Inicio</label>
+          <input type="date" [(ngModel)]="fechaInicio" (change)="cargarDatos()">
+        </div>
+        <div class="input-group">
+          <label>Fecha Fin</label>
+          <input type="date" [(ngModel)]="fechaFin" (change)="cargarDatos()">
+        </div>
+      </div>
+      
+      <button class="btn-pdf" (click)="descargarPDF()" [disabled]="cargando">
+        <span class="icon">📥</span> DESCARGAR PDF
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="cargando" class="loading">Cargando datos del periodo...</div>
+
+  <div class="dashboard-grid" *ngIf="datosReporte && !cargando">
+    
+    <div class="stat-card main-card">
+      <h3>Ingresos Brutos Totales</h3>
+      <div class="number text-highlight">{{ datosReporte.ingresosBrutosTotales | currency:'COP':'symbol-narrow':'1.0-0' }}</div>
+      <p class="subtitle">{{ datosReporte.periodo }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Bicicletas Vendidas</h3>
+      <div class="number">{{ datosReporte.totalBicicletasVendidas }}</div>
+      <p class="subtitle">Unidades entregadas</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Entradas de Inventario</h3>
+      <div class="number">{{ datosReporte.totalEntradas }}</div>
+      <p class="subtitle">Nuevas unidades ingresadas</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Salidas / Ajustes</h3>
+      <div class="number">{{ datosReporte.totalSalidas }}</div>
+      <p class="subtitle">Unidades retiradas</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Stock Actual Global</h3>
+      <div class="number text-highlight">{{ datosReporte.bicicletasEnStock }}</div>
+      <p class="subtitle">Bicicletas activas en el sistema</p>
+    </div>
+
+  </div>
+</div>
