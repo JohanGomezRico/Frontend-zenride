@@ -33,7 +33,7 @@ export class BicicletasComponent implements OnInit {
   private bicicletaService = inject(BicicletaService);
   private fb = inject(FormBuilder);
 
-  // 1. Agregamos 'acciones' a las columnas mostradas
+  // Agregamos 'acciones' a las columnas mostradas
   displayedColumns: string[] = ['id', 'codigo', 'marca', 'modelo', 'precioVenta', 'tipo', 'acciones'];
   bicicletasForm: FormGroup;
   bicicletas: Bicicleta[] = [];

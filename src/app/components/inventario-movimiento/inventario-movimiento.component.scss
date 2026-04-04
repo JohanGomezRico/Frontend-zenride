@@ -57,7 +57,7 @@ h2 {
   }
 }
 
-// 3. Formulario ZenRide
+// 3. Formulario ZenRide (Modificado para Lotes)
 .formulario-inventario {
   background: #fff;
   padding: 30px;
@@ -68,11 +68,56 @@ h2 {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
     margin-bottom: 10px;
+    align-items: center;
+  }
+
+  .info-movimiento {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #e8f5e9;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: #2e7d32;
+    font-size: 0.9rem;
+    strong { font-weight: 900; }
   }
 
   .w-100 {
     width: 100%;
     margin-top: 10px;
+  }
+
+  // Estilos para las filas dinámicas del FormArray
+  .fila-lote-dinamica {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px dashed #ccc;
+
+    .select-bici { flex: 3; }
+    .input-cantidad { flex: 1; max-width: 120px; }
+  }
+
+  .acciones-form {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+
+    .btn-agregar { 
+      border: 2px solid #000; 
+      color: #000; 
+      font-weight: bold;
+      flex: 1;
+    }
+    
+    .btn-guardar {
+      flex: 1;
+    }
   }
 }
 
@@ -81,10 +126,6 @@ h2 {
   .mat-mdc-raised-button.mat-primary {
     background-color: #000 !important;
     color: #fff !important;
-    width: 100%;
-    max-width: 300px;
-    display: block;
-    margin: 25px auto 0;
     padding: 12px 0 !important;
     font-weight: 700 !important;
     letter-spacing: 1.5px;
@@ -95,11 +136,6 @@ h2 {
       background-color: #333 !important;
       transform: translateY(-2px);
       box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important;
-    }
-
-    &:active:not(:disabled) {
-      transform: translateY(0);
-      background-color: #555 !important;
     }
 
     &:disabled {
@@ -117,45 +153,34 @@ h2 {
 .tabla-contenedor {
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  
-  // PROPIEDADES DE SCROLL
-  max-height: 480px;      // Límite de altura antes del scroll
-  overflow-y: auto;       // Scroll vertical automático
-  overflow-x: hidden;     // Evitar scroll horizontal
+  max-height: 480px;
+  overflow-y: auto;
+  overflow-x: hidden;
   background: white;
 
-  table { 
-    width: 100%; 
-  }
+  table { width: 100%; }
 
-  // CABECERA FIJA (Sticky Header)
   .mat-mdc-header-cell {
     position: sticky;
     top: 0;
     z-index: 10;
-    background: #f8f9fa !important; // Fondo para que no sea transparente al bajar
+    background: #f8f9fa !important;
     color: #000;
     font-weight: 900;
     text-transform: uppercase;
     font-size: 0.75rem;
-    letter-spacing: 0.5px;
   }
 
-  // Colores para Entrada y Salida
   .texto-entrada {
     color: #2e7d32 !important;
     font-weight: bold;
-    background: #e8f5e9;
-    padding: 5px 12px;
-    border-radius: 20px;
   }
 
-  .texto-salida {
-    color: #d32f2f !important;
-    font-weight: bold;
-    background: #ffebee;
-    padding: 5px 12px;
-    border-radius: 20px;
+  .item-historial {
+    font-size: 0.85rem;
+    padding: 2px 0;
+    border-bottom: 1px solid #f0f0f0;
+    &:last-child { border: none; }
   }
 
   .mat-mdc-row:hover {
@@ -175,16 +200,18 @@ h2 {
     flex-direction: column;
     .card-stock-total { border-right: none; border-bottom: 2px solid #eee; padding-bottom: 15px; }
   }
+  
+  .fila-lote-dinamica {
+    flex-direction: column;
+    .select-bici, .input-cantidad { max-width: 100%; width: 100%; }
+  }
+
+  .acciones-form {
+    flex-direction: column;
+  }
 }
 
-/* Personalización del Scrollbar (ZenRide Black Style) */
-.tabla-contenedor::-webkit-scrollbar {
-  width: 6px;
-}
-.tabla-contenedor::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-.tabla-contenedor::-webkit-scrollbar-thumb {
-  background: #000;
-  border-radius: 10px;
-}
+/* Scrollbar Style */
+.tabla-contenedor::-webkit-scrollbar { width: 6px; }
+.tabla-contenedor::-webkit-scrollbar-track { background: #f1f1f1; }
+.tabla-contenedor::-webkit-scrollbar-thumb { background: #000; border-radius: 10px; }

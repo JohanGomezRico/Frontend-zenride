@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <h2>Movimiento de Inventario - ZenRide 🚲</h2>
+  <h2>Carga de Lotes - ZenRide 🚲</h2>
 
   <div class="resumen-bodega">
     <div class="card-stock-total">
@@ -14,74 +14,72 @@
   </div>
 
   <form [formGroup]="movimientoForm" (ngSubmit)="guardar()" class="formulario-inventario mat-elevation-z4">
+    
     <div class="form-row">
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Bicicleta</mat-label>
-        <mat-select formControlName="bicicletaId">
-          <mat-option *ngFor="let b of bicicletas" [value]="b.id">
-            {{ b.codigo }} - {{ b.marca }} {{ b.modelo }} (Stock: {{b.stockActual}})
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Tipo de Movimiento</mat-label>
-        <mat-select formControlName="tipoMovimiento">
-          <mat-option value="ENTRADA">Entrada (+)</mat-option>
-          <mat-option value="SALIDA">Salida (-)</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div class="form-row">
-      <mat-form-field appearance="outline">
-        <mat-label>Cantidad</mat-label>
-        <input matInput type="number" formControlName="cantidad">
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Responsable</mat-label>
+        <mat-label>Responsable de Recepción</mat-label>
         <input matInput formControlName="responsableOperacion" placeholder="Ej: Johan Gomez">
       </mat-form-field>
+
+      <div class="info-movimiento">
+        <mat-icon color="primary">input</mat-icon>
+        <span>Tipo: <strong>ENTRADA DE LOTE</strong></span>
+      </div>
     </div>
 
     <mat-form-field appearance="outline" class="w-100">
-      <mat-label>Descripción / Observaciones</mat-label>
-      <textarea matInput formControlName="descripcion"></textarea>
+      <mat-label>Descripción / Observaciones del Lote</mat-label>
+      <textarea matInput formControlName="descripcion" placeholder="Ej: Recepción camión de fábrica #402"></textarea>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="movimientoForm.invalid">
-      ACTUALIZAR STOCK
-    </button>
+    <hr class="divisor">
+    <h4 class="mb-3">Desglose de Bicicletas</h4>
+
+    <div formArrayName="detalles">
+      <div *ngFor="let d of detalles.controls; let i=index" [formGroupName]="i" class="fila-lote-dinamica">
+        
+        <mat-form-field appearance="fill" class="select-bici">
+          <mat-label>Bicicleta</mat-label>
+          <mat-select formControlName="bicicletaId">
+            <mat-option *ngFor="let b of bicicletas" [value]="b.id">
+              {{ b.codigo }} - {{ b.marca }} (Stock: {{b.stockActual}})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="input-cantidad">
+          <mat-label>Cantidad</mat-label>
+          <input matInput type="number" formControlName="cantidad">
+        </mat-form-field>
+
+        <button mat-icon-button color="warn" type="button" (click)="removerFila(i)" *ngIf="detalles.length > 1">
+          <mat-icon>delete_sweep</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="acciones-form">
+      <button mat-stroked-button type="button" (click)="agregarFila()" class="btn-agregar">
+        <mat-icon>add_circle</mat-icon> AÑADIR OTRA REFERENCIA
+      </button>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="movimientoForm.invalid" class="btn-guardar">
+        CONFIRMAR INGRESO DE LOTE
+      </button>
+    </div>
   </form>
 
   <hr class="divisor">
 
   <div class="header-tabla-filtros">
-    <h3>Historial Reciente</h3>
-    
+    <h3>Historial de Entradas</h3>
     <div class="grid-filtros">
       <mat-form-field appearance="outline" class="f-texto">
-        <mat-label>Buscador General</mat-label>
-        <input matInput [(ngModel)]="filtros.texto" placeholder="Código o responsable...">
-        <mat-icon matSuffix>search</mat-icon>
+        <mat-label>Buscador</mat-label>
+        <input matInput [(ngModel)]="filtros.texto" placeholder="Responsable...">
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="f-tipo">
-        <mat-label>Tipo</mat-label>
-        <mat-select [(ngModel)]="filtros.tipo">
-          <mat-option value="">Todos</mat-option>
-          <mat-option value="ENTRADA">Entradas</mat-option>
-          <mat-option value="SALIDA">Salidas</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="f-fecha">
-        <mat-label>Fecha</mat-label>
-        <input matInput type="date" [(ngModel)]="filtros.fecha">
-      </mat-form-field>
-
-      <button mat-icon-button color="warn" (click)="filtros = {texto:'', tipo:'', fecha:''}" matTooltip="Limpiar filtros">
+      <button mat-icon-button color="warn" (click)="filtros = {texto:'', tipo:'ENTRADA', fecha:''}">
         <mat-icon>filter_alt_off</mat-icon>
       </button>
     </div>
@@ -89,29 +87,26 @@
 
   <div class="mat-elevation-z8 tabla-contenedor">
     <table mat-table [dataSource]="historialFiltrado">
+      
       <ng-container matColumnDef="fecha">
         <th mat-header-cell *matHeaderCellDef> Fecha </th>
         <td mat-cell *matCellDef="let element"> {{element.fechaMovimiento | date:'short'}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="bicicleta">
-        <th mat-header-cell *matHeaderCellDef> Bicicleta </th>
+      <ng-container matColumnDef="detalles">
+        <th mat-header-cell *matHeaderCellDef> Items del Lote </th>
         <td mat-cell *matCellDef="let element"> 
-          <strong>{{element.bicicletaCodigo}}</strong> - {{element.nombreBicicleta}} 
+          <div *ngFor="let item of element.detallesLote" class="item-historial">
+            • {{item.nombreBicicleta}}: <strong>{{item.cantidad}}</strong>
+          </div>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="tipo">
         <th mat-header-cell *matHeaderCellDef> Tipo </th>
-        <td mat-cell *matCellDef="let element" 
-            [ngClass]="{'texto-entrada': element.tipoMovimiento === 'ENTRADA', 'texto-salida': element.tipoMovimiento === 'SALIDA'}"> 
-          {{element.tipoMovimiento}} 
+        <td mat-cell *matCellDef="let element" class="texto-entrada"> 
+          ENTRADA
         </td>
-      </ng-container>
-
-      <ng-container matColumnDef="cantidad">
-        <th mat-header-cell *matHeaderCellDef> Cant </th>
-        <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
       </ng-container>
 
       <ng-container matColumnDef="responsable">
@@ -120,8 +115,8 @@
       </ng-container>
 
       <ng-container matColumnDef="descripcion">
-        <th mat-header-cell *matHeaderCellDef> Descripción </th>
-        <td mat-cell *matCellDef="let element"> {{element.descripcion || '---'}} </td>
+        <th mat-header-cell *matHeaderCellDef> Notas </th>
+        <td mat-cell *matCellDef="let element"> {{element.descripcion || 'Sin observaciones'}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
