@@ -1,0 +1,62 @@
+<div class="container-detalle" *ngIf="bicicleta">
+  <div class="header-detalle">
+    <button class="btn-regresar" routerLink="/inicio">← Volver al catálogo</button>
+  </div>
+
+  <div class="grid-producto">
+    <div class="col-imagen">
+      <img [src]="'img/bicicletas/' + limpiarNombre(bicicleta.modelo) + '.jpg'" 
+           [alt]="bicicleta.modelo"
+           [style.filter]="colorFiltro">
+    </div>
+
+    <div class="col-info">
+      <span class="categoria">{{ bicicleta.tipo | uppercase }}</span>
+      <h1>{{ bicicleta.marca }} {{ bicicleta.modelo }}</h1>
+      <p class="precio">{{ bicicleta.precioVenta | currency:'COP':'$':'1.0-0' }}</p>
+      
+      <div class="status">
+        <span class="stock-label">Disponibilidad:</span>
+        <span class="stock-valor" [class.low]="bicicleta.stockActual < 3">
+          {{ bicicleta.stockActual }} unidades en stock
+        </span>
+      </div>
+
+      <div class="descripcion-tecnica">
+        <h3>Especificaciones</h3>
+        <ul>
+          <li><strong>Marca:</strong> {{ bicicleta.marca }}</li>
+          <li><strong>Tipo:</strong> {{ bicicleta.tipo }}</li>
+        </ul>
+      </div>
+
+      <div class="selector-colores">
+        <h3>Colores disponibles</h3>
+        <div class="contenedor-botones">
+          <button (click)="colorFiltro = 'none'" class="btn-color original" title="Original"></button>
+          <button (click)="colorFiltro = 'hue-rotate(190deg) saturate(2)'" class="btn-color azul" title="Azul"></button>
+          <button (click)="colorFiltro = 'hue-rotate(80deg) saturate(1.5) brightness(0.9)'" class="btn-color verde" title="Verde"></button>
+          <button (click)="colorFiltro = 'hue-rotate(340deg) saturate(2)'" class="btn-color rojo" title="Rojo"></button>
+        </div>
+      </div>
+
+      <button class="btn-accion" (click)="contactarVendedor()">CONTACTAR PARA COMPRA</button>
+    </div>
+  </div>
+
+  <div class="tienda-mapa">
+    <h3><mat-icon>location_on</mat-icon> Encuéntranos en Tienda</h3>
+    <p>{{ contacto.tienda }}</p>
+    <div class="map-container">
+<iframe 
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3977.16523456789!2d-75.6681951!3d4.540976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e38f50000000000%3A0x0000000000000000!2sSENA%20Centro%20de%20Comercio%20y%20Turismo!5e0!3m2!1ses-419!2sco!4v1712285000000!5m2!1ses-419!2sco"
+  width="100%" 
+  height="350" 
+  style="border:0; border-radius: 15px;" 
+  allowfullscreen="" 
+  loading="lazy" 
+  referrerpolicy="no-referrer-when-downgrade">
+</iframe>
+    </div>
+  </div>
+</div>

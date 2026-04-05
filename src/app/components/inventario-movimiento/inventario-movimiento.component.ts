@@ -7,6 +7,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker'; // Nuevo para fecha
+import { MatNativeDateModule } from '@angular/material/core'; // Nuevo para fecha
 import { InventarioService } from '../../services/inventario.service';
 import { BicicletaService } from '../../services/bicicleta.service';
 
@@ -15,7 +17,8 @@ import { BicicletaService } from '../../services/bicicleta.service';
   standalone: true,
   imports: [
     CommonModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, 
-    MatInputModule, MatSelectModule, MatButtonModule, MatTableModule, MatIconModule
+    MatInputModule, MatSelectModule, MatButtonModule, MatTableModule, MatIconModule,
+    MatDatepickerModule, MatNativeDateModule // Asegúrate de importar estos
   ],
   templateUrl: './inventario-movimiento.component.html',
   styleUrl: './inventario-movimiento.component.scss'
@@ -29,9 +32,11 @@ export class InventarioMovimientoComponent implements OnInit {
   bicicletas: any[] = [];
   historial: any[] = [];
   
+  // 🚩 FILTROS AMPLIADOS
   filtros = {
-    texto: '',
-    tipo: 'ENTRADA', // Por defecto solo mostrar entradas
+    texto: '',    // Para responsable
+    codigo: '',   // Nuevo: Para código de bici
+    tipo: '',     // Cambiado a vacío para que "Todos" sea la opción inicial
     fecha: '' 
   };
 
@@ -39,7 +44,7 @@ export class InventarioMovimientoComponent implements OnInit {
 
   constructor() {
     this.movimientoForm = this.fb.group({
-      tipoMovimiento: ['ENTRADA', [Validators.required]], // Fijo en ENTRADA
+      tipoMovimiento: ['ENTRADA', [Validators.required]], 
       responsableOperacion: ['', [Validators.required]],  
       descripcion: [''],
       detalles: this.fb.array([]) 
@@ -78,20 +83,31 @@ export class InventarioMovimientoComponent implements OnInit {
     this.inventarioService.getMovimientos().subscribe(res => this.historial = res || []);
   }
 
+  // 🚩 LÓGICA DE FILTRADO ACUMULATIVO
   get historialFiltrado() {
     return this.historial.filter(m => {
-      const cumpleTexto = !this.filtros.texto || 
+      // Filtro por Responsable
+      const cumpleResponsable = !this.filtros.texto || 
         m.responsableOperacion?.toLowerCase().includes(this.filtros.texto.toLowerCase());
 
+      // Filtro por Código de Bicicleta (Convierte a string para comparar)
+      const cumpleCodigo = !this.filtros.codigo || 
+        m.bicicletaCodigo?.toString().includes(this.filtros.codigo);
+
+      // Filtro por Tipo (Entrada/Salida)
       const cumpleTipo = !this.filtros.tipo || m.tipoMovimiento === this.filtros.tipo;
 
+      // Filtro por Fecha
       let cumpleFecha = true;
       if (this.filtros.fecha) {
-        const fechaMovimientoLimpia = m.fechaMovimiento?.substring(0, 10);
-        cumpleFecha = fechaMovimientoLimpia === this.filtros.fecha;
+        // Si la fecha viene de un datepicker como objeto, la pasamos a string YYYY-MM-DD
+        const fechaFiltro = new Date(this.filtros.fecha).toISOString().substring(0, 10);
+        const fechaMovimiento = m.fechaMovimiento?.substring(0, 10);
+        cumpleFecha = fechaMovimiento === fechaFiltro;
       }
 
-      return cumpleTexto && cumpleTipo && cumpleFecha;
+      // Solo se muestra si CUMPLE TODAS las condiciones
+      return cumpleResponsable && cumpleCodigo && cumpleTipo && cumpleFecha;
     });
   }
 

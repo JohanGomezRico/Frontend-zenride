@@ -1,0 +1,48 @@
+<div class="titulo-superior-container">
+  <p>¡Factura ZenRide!</p>
+</div>
+
+<div class="factura-container">
+  <div class="header">
+    <mat-icon class="logo-icon">pedal_bike</mat-icon>
+    <h1>ZENRIDE</h1>
+    <p>Comprobante de Venta #{{ data.id }}</p>
+  </div>
+
+  <div class="cuerpo">
+    <div class="info-cliente">
+      <p><strong>Fecha:</strong> {{ data.fechaVenta | date:'medium' }}</p>
+      <p><strong>Cliente:</strong> {{ data.nombreCliente }}</p>
+      <p><strong>Documento:</strong> {{ data.documento || 'No registrado' }}</p>
+    </div>
+
+    <table class="tabla-recibo">
+      <thead>
+        <tr>
+          <th>Cant.</th>
+          <th>Descripción</th>
+          <th class="text-right">Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of data.detalles">
+          <td>{{ d.cantidad }}x</td>
+          <td>{{ d.modeloBicicleta || d.nombreBicicleta }}</td>
+          <td class="text-right">{{ (d.precioVenta || 0) | currency }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="total-seccion">
+      <span>TOTAL PAGADO</span>
+      <strong class="monto">{{ data.totalVenta | currency }}</strong>
+    </div>
+  </div>
+
+  <div class="acciones no-print">
+    <button mat-button (click)="cerrar()">CERRAR</button>
+    <button mat-raised-button color="primary" (click)="imprimir()">
+      <mat-icon>print</mat-icon> IMPRIMIR
+    </button>
+  </div>
+</div>

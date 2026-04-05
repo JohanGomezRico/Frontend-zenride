@@ -51,10 +51,28 @@ h2 {
       font-size: 0.85rem;
       color: #444;
       box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      transition: all 0.3s ease; 
       
       strong { color: #000; margin-left: 5px; }
+
+      &.stock-alerta {
+        background-color: #fff1f0 !important;
+        border: 2px solid #ff4d4f !important;
+        color: #cf1322 !important;
+        animation: pulse-border 2s infinite;
+
+        strong {
+          color: #cf1322 !important;
+        }
+      }
     }
   }
+}
+
+@keyframes pulse-border {
+  0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(255, 77, 79, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); }
 }
 
 // 3. Formulario ZenRide (Modificado para Lotes)
@@ -88,7 +106,6 @@ h2 {
     margin-top: 10px;
   }
 
-  // Estilos para las filas dinámicas del FormArray
   .fila-lote-dinamica {
     display: flex;
     gap: 15px;
@@ -171,9 +188,29 @@ h2 {
     font-size: 0.75rem;
   }
 
-  .texto-entrada {
-    color: #2e7d32 !important;
-    font-weight: bold;
+  // --- MEJORA PROFESIONAL PARA TIPO ---
+  .badge-tipo {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    min-width: 80px;
+
+    &.entrada {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+    }
+
+    &.salida {
+      background-color: #fff1f0;
+      color: #cf1322;
+      border: 1px solid #ffa39e;
+    }
   }
 
   .item-historial {
@@ -211,7 +248,6 @@ h2 {
   }
 }
 
-/* Scrollbar Style */
 .tabla-contenedor::-webkit-scrollbar { width: 6px; }
 .tabla-contenedor::-webkit-scrollbar-track { background: #f1f1f1; }
 .tabla-contenedor::-webkit-scrollbar-thumb { background: #000; border-radius: 10px; }

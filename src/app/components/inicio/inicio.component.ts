@@ -9,7 +9,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { BicicletaService } from '../../services/bicicleta.service';
 import { Bicicleta } from '../../model/bicicleta';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router'; // Se agrega Router para la navegación
 
 @Component({
   selector: 'app-inicio',
@@ -40,7 +40,11 @@ export class InicioComponent implements OnInit {
   
   criterioOrden: string = 'defecto';
 
-  constructor(private biciService: BicicletaService) {}
+  // Se inyecta el Router en el constructor
+  constructor(
+    private biciService: BicicletaService,
+    private router: Router 
+  ) {}
 
   ngOnInit() {
     this.cargarBicicletas();
@@ -54,6 +58,13 @@ export class InicioComponent implements OnInit {
       },
       error: (err) => console.error('Error al cargar bicicletas', err)
     });
+  }
+
+  // Función para navegar al detalle de la bicicleta
+  verDetalle(id: number | undefined) {
+    if (id) {
+      this.router.navigate(['/bicicleta', id]);
+    }
   }
 
   setFiltroTipo(tipo: string) {
@@ -122,7 +133,8 @@ export class InicioComponent implements OnInit {
                 .replace(/[\u0300-\u036f]/g, '')
                 .replace(/\s+/g, '-'); 
   }
- updateUrl(event: any) {
-  event.target.src = 'img/bicicletas/nantes.jpg'; // Ruta limpia
-}
+
+  updateUrl(event: any) {
+    event.target.src = 'img/bicicletas/nantes.jpg'; // Ruta limpia
+  }
 }

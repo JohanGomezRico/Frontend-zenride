@@ -1,0 +1,153 @@
+// Esto centrará el texto de arriba perfectamente
+.titulo-superior-container {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px; // Espacio entre el texto y la factura blanca
+  
+  p {
+    margin: 0;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #025b06; // O el color que prefieras para que resalte sobre el fondo oscuro
+  }
+}
+
+// Contenedor principal del Modal
+.factura-container {
+  padding: 20px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #333;
+  background-color: #fff;
+  max-width: 100%;
+}
+
+// Encabezado con estilo de marca
+.header {
+  text-align: center;
+  border-bottom: 2px solid #222;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+
+  .logo-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: #000;
+  }
+
+  p {
+    margin: 5px 0 0;
+    font-size: 0.85rem;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+}
+
+// Información del cliente y fecha
+.info-cliente {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 25px;
+  font-size: 0.95rem;
+
+  p {
+    margin: 0;
+    strong {
+      color: #555;
+      margin-right: 5px;
+    }
+  }
+}
+
+// Tabla de productos estilo minimalista
+.tabla-recibo {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+
+  th {
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #888;
+    border-bottom: 1px solid #eee;
+    padding: 8px 0;
+  }
+
+  td {
+    padding: 12px 0;
+    border-bottom: 1px solid #f9f9f9;
+    font-size: 0.95rem;
+  }
+
+  .text-right {
+    text-align: right;
+  }
+}
+
+// Sección de Total destacada
+.total-seccion {
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 5px solid #000;
+
+  span {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #444;
+  }
+
+  .monto {
+    font-size: 1.5rem;
+    color: #000;
+  }
+}
+
+// Botones de acción
+.acciones {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  button {
+    padding: 0 20px;
+  }
+}
+
+/* --- CONFIGURACIÓN PARA IMPRESIÓN --- */
+@media print {
+  // Ocultar botones y elementos innecesarios al imprimir
+  .no-print, .acciones, mat-icon:not(.logo-icon) {
+    display: none !important;
+  }
+
+  .factura-container {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  // Asegurar que el fondo del total se vea al imprimir (algunos navegadores lo quitan)
+  .total-seccion {
+    background-color: #f4f4f4 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
