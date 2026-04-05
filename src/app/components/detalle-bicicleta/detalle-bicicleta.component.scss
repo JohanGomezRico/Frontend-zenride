@@ -1,0 +1,325 @@
+// Contenedor Principal
+.container-detalle {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  min-height: 80vh;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+// Botón Regresar
+.header-detalle {
+  margin-bottom: 25px;
+  display: flex;
+
+  .btn-regresar {
+    // Estilo idéntico a la etiqueta 'ELECTRICA'
+    background: #1a1a1a;      // Fondo negro profundo
+    color: #ccff00;           // Verde neón de ZenRide
+    padding: 6px 14px;        // Espaciado tipo cápsula
+    border-radius: 5px;       // Bordes ligeramente redondeados
+    border: none;
+    
+    // Tipografía
+    font-size: 0.75rem;       // Tamaño pequeño y elegante
+    font-weight: 800;         // Negrilla máxima
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+
+    &:hover {
+      // Efecto de iluminación al pasar el mouse
+      background: #333; 
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(204, 255, 0, 0.2);
+    }
+
+    // Opcional: Si quieres mantener la flechita
+    &::before {
+      content: '←';
+      margin-right: 8px;
+      font-size: 1rem;
+    }
+  }
+}
+
+// Grid de Producto
+.grid-producto {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+}
+
+// Columna de Imagen
+.col-imagen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f8;
+  border-radius: 15px;
+  overflow: hidden;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.5s, filter 0.3s ease; // Añadida transición para el filtro
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Columna de Información
+.col-info {
+  display: flex;
+  flex-direction: column;
+
+  .categoria {
+    color: #ccff00;
+    background: #1a1a1a;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    align-self: flex-start;
+    margin-bottom: 15px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+    font-weight: 800;
+  }
+
+  .precio {
+    font-size: 2rem;
+    color: #333;
+    font-weight: 300;
+    margin-bottom: 25px;
+  }
+
+  .status {
+    margin-bottom: 30px;
+    padding: 15px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+
+    .stock-label {
+      color: #666;
+      margin-right: 10px;
+    }
+
+    .stock-valor {
+      font-weight: 700;
+      color: #28a745;
+
+      &.low {
+        color: #dc3545;
+      }
+    }
+  }
+
+  .descripcion-tecnica {
+    margin-bottom: 20px; // Ajustado para dar espacio al selector
+
+    h3 {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        padding: 8px 0;
+        border-bottom: 1px dashed #eee;
+        color: #555;
+        
+        strong {
+          color: #1a1a1a;
+          width: 100px;
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  .btn-accion {
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    padding: 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover {
+      background: #ccff00;
+      color: #1a1a1a;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(204, 255, 0, 0.3);
+    }
+  }
+}
+
+// --- ESTILOS DEL SELECTOR DE COLORES ---
+.selector-colores {
+  margin-bottom: 30px;
+
+  h3 {
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .contenedor-botones {
+    display: flex;
+    gap: 15px;
+
+    .btn-color {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      border: 2px solid #eee;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: scale(1.2);
+        border-color: #ccff00;
+      }
+
+      &.original { background: #1a1a1a; }
+      &.azul { background: linear-gradient(45deg, #a8e6cf, #dcedc1, #ffd3b6, #ffaaa5, #ff8b94, #a8e6cf);
+  background-size: 400% 400%; 
+  border: none;
+  animation: gradiente-animado 8s ease infinite; 
+  color: white;
+
+  &:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+}
+
+// Definición de la animación
+@keyframes gradiente-animado {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+
+ }
+      &.verde { background: linear-gradient(45deg, 
+    #ffb3ba, #ffdfba, #ffffba, #baffc9, 
+    #bae1ff, #a29bfe, #fab1a0, #ffeaa7, 
+    #81ecec, #74b9ff, #a29bfe, #ffb3ba
+  );
+  
+  background-size: 400% 400%; 
+  border: none;
+  animation: gradiente-animado 10s ease infinite; // Un poco más lento para mayor suavidad
+  color: #444; // Texto en gris oscuro para que se lea mejor sobre colores claros
+
+  // Ajuste de sombra para que combine con tonos claros
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    transform: scale(1.2);
+    // Brillo más sutil en el hover
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+  }
+}
+
+// La animación se mantiene igual, pero el efecto será más fluido
+@keyframes gradiente-animado {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+ }
+      &.rojo { background: linear-gradient(45deg, #ffb3ba, #ffdfba, #ffffba, #baffc9, #bae1ff, #a29bfe, #e0a7ff, #ffb3e6, #ffb3ba);
+  background-size: 400% 400%; 
+  border: none;
+  animation: gradiente-animado 8s ease infinite; 
+  color: white;
+
+  &:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+}
+
+// Definición de la animación
+@keyframes gradiente-animado {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+ }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// AGREGAR AL FINAL DEL ARCHIVO:
+.tienda-mapa {
+  margin-top: 40px;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #1a1a1a;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    mat-icon { color: #ccff00; }
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+  }
+
+  .map-container {
+    overflow: hidden;
+    border: 2px solid #f0f0f0;
+    border-radius: 15px;
+    filter: grayscale(0.3); // Estilo moderno para el mapa
+    transition: filter 0.3s ease;
+
+    &:hover {
+      filter: grayscale(0);
+    }
+  }
+}

@@ -1,0 +1,95 @@
+.footer-zenride {
+  background-color: #1a1a1a; // Negro mate profundo
+  color: #ffffff;
+  padding: 60px 0 20px 0;
+  margin-top: 80px;
+  border-top: 4px solid #ccff00; // Línea neón superior
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    padding: 0 20px;
+  }
+
+  .footer-section {
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+      letter-spacing: -1px;
+      span { color: #ccff00; } // Verde ZenRide
+    }
+
+    p {
+      color: #aaa;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    h3 {
+      color: #fff;
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 30px;
+        height: 2px;
+        background-color: #ccff00;
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        margin-bottom: 12px;
+        a {
+          color: #aaa;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          &:hover {
+            color: #ccff00;
+            padding-left: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 25px;
+    border-top: 1px solid #333;
+    p {
+      color: #666;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+  }
+
+  .nombres{font-weight: bold;
+           color: #fff;}
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+    .footer-section h3::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+}

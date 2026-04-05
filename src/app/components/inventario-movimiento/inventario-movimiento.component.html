@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <h2>Carga de Lotes - ZenRide 🚲</h2>
+  <h2>INVENTARIO - ZenRide 🚲</h2>
 
   <div class="resumen-bodega">
     <div class="card-stock-total">
@@ -7,8 +7,12 @@
       <strong>{{ stockTotalGeneral }}</strong>
     </div>
     <div class="detalles-por-bici">
-      <div *ngFor="let b of bicicletas" class="bici-badge">
-        {{ b.marca }} ({{ b.codigo }}): <strong>{{ b.stockActual }}</strong>
+      <div *ngFor="let b of bicicletas" 
+           class="bici-badge" 
+           [ngClass]="{'stock-alerta': b.stockActual <= 3}">
+        {{ b.marca }} ({{ b.codigo }}): 
+        <strong>{{ b.stockActual }}</strong>
+        <span *ngIf="b.stockActual <= 3"> ⚠️</span>
       </div>
     </div>
   </div>
@@ -23,7 +27,7 @@
 
       <div class="info-movimiento">
         <mat-icon color="primary">input</mat-icon>
-        <span>Tipo: <strong>ENTRADA DE LOTE</strong></span>
+        <span>Tipo: <strong>ENTRADA INVENTARIO </strong></span>
       </div>
     </div>
 
@@ -73,13 +77,34 @@
 
   <div class="header-tabla-filtros">
     <h3>Historial de Entradas</h3>
-    <div class="grid-filtros">
+    <div class="grid-filtros" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+      
       <mat-form-field appearance="outline" class="f-texto">
-        <mat-label>Buscador</mat-label>
-        <input matInput [(ngModel)]="filtros.texto" placeholder="Responsable...">
+        <mat-label>Responsable</mat-label>
+        <input matInput [(ngModel)]="filtros.texto" placeholder="Buscar...">
       </mat-form-field>
 
-      <button mat-icon-button color="warn" (click)="filtros = {texto:'', tipo:'ENTRADA', fecha:''}">
+      <mat-form-field appearance="outline" style="width: 150px;">
+        <mat-label>Cód. Bici</mat-label>
+        <input matInput [(ngModel)]="filtros.codigo" placeholder="Ej: 433">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="width: 150px;">
+        <mat-label>Tipo</mat-label>
+        <mat-select [(ngModel)]="filtros.tipo">
+          <mat-option value="">Todos</mat-option>
+          <mat-option value="ENTRADA">Entrada</mat-option>
+          <mat-option value="SALIDA">Salida</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="width: 180px;">
+        <mat-label>Fecha</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="filtros.fecha">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker> </mat-form-field>
+
+      <button mat-icon-button color="warn" (click)="filtros = {texto:'', codigo:'', tipo:'', fecha:''}">
         <mat-icon>filter_alt_off</mat-icon>
       </button>
     </div>
@@ -94,18 +119,22 @@
       </ng-container>
 
       <ng-container matColumnDef="detalles">
-        <th mat-header-cell *matHeaderCellDef> Items del Lote </th>
+        <th mat-header-cell *matHeaderCellDef> Bicicleta / Cantidad </th>
         <td mat-cell *matCellDef="let element"> 
-          <div *ngFor="let item of element.detallesLote" class="item-historial">
-            • {{item.nombreBicicleta}}: <strong>{{item.cantidad}}</strong>
+          <div class="item-historial">
+            <strong>{{element.bicicletaCodigo}}</strong> - {{element.nombreBicicleta}} 
+            <br>
+            <small>Cantidad: <strong>{{element.cantidad}}</strong></small>
           </div>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="tipo">
         <th mat-header-cell *matHeaderCellDef> Tipo </th>
-        <td mat-cell *matCellDef="let element" class="texto-entrada"> 
-          ENTRADA
+        <td mat-cell *matCellDef="let element"> 
+          <span class="badge-tipo" [ngClass]="element.tipoMovimiento === 'ENTRADA' ? 'entrada' : 'salida'">
+            {{element.tipoMovimiento}}
+          </span>
         </td>
       </ng-container>
 
