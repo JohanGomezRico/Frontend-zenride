@@ -1,0 +1,22 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="card-header">
+      <h2>Iniciar Sesión</h2>
+      <p>Bienvenido de vuelta a <span>Zen</span> <span class="highlight">Ride</span></p>
+    </div>
+    
+    <div class="input-group">
+      <label>Usuario</label>
+      <input type="text" [(ngModel)]="username" placeholder="Ej. miguel_admin">
+    </div>
+
+    <div class="input-group">
+      <label>Contraseña</label>
+      <input type="password" [(ngModel)]="password" placeholder="Ingresa tu contraseña">
+    </div>
+
+    <p class="error-msg" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <button class="login-btn" (click)="onLogin()">INGRESAR</button>
+  </div>
+</div>

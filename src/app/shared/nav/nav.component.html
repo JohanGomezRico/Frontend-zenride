@@ -15,7 +15,12 @@
     </ul>
 
     <div class="nav-actions">
-      <button class="icon-btn"><mat-icon>person_outline</mat-icon></button>
+      <button class="icon-btn" routerLink="/login" *ngIf="!authService.isLoggedIn()">
+        <mat-icon>person_outline</mat-icon>
+      </button>
+      <button class="icon-btn" (click)="onLogout()" *ngIf="authService.isLoggedIn()" title="Cerrar sesión">
+        <mat-icon>exit_to_app</mat-icon> </button>
+        
       <button class="icon-btn"><mat-icon>favorite_border</mat-icon></button>
       <button class="icon-btn cart-btn">
         <mat-icon>shopping_bag</mat-icon>
