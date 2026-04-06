@@ -1,0 +1,107 @@
+// Variables de la paleta Zen Ride
+$bg-dark: #1a1a1a;
+$neon-green: #c6ff00;
+$neon-hover: #d4ff33;
+$text-light: #ffffff;
+$text-muted: #a0a0a0;
+$input-bg: #2a2a2a;
+$input-border: #3d3d3d;
+$error-red: #ff4c4c;
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 75vh;
+  background-color: transparent;
+
+  .login-card {
+    background-color: $bg-dark;
+    padding: 40px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    border-left: 6px solid $neon-green;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+    .card-header {
+      text-align: center;
+      margin-bottom: 30px;
+
+      h2 {
+        color: $text-light;
+        margin: 0 0 10px 0;
+        font-size: 28px;
+      }
+
+      p {
+        color: $text-muted;
+        margin: 0;
+        font-size: 16px;
+
+        span:first-child {
+          color: $text-light;
+          font-weight: bold;
+        }
+
+        .highlight {
+          color: $neon-green;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+
+      label {
+        display: block;
+        color: lighten($text-muted, 20%);
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        background-color: $input-bg;
+        border: 1px solid $input-border;
+        border-radius: 4px;
+        color: $text-light;
+        font-size: 15px;
+        outline: none;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+
+        &:focus {
+          border-color: $neon-green;
+        }
+      }
+    }
+
+    .error-msg {
+      color: $error-red;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: $neon-green;
+      color: #000000;
+      border: none;
+      border-radius: 4px;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.2s;
+
+      &:hover {
+        background-color: $neon-hover;
+        transform: translateY(-2px);
+      }
+    }
+  }
+}
