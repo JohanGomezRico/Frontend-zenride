@@ -7,11 +7,14 @@
 
     <ul class="nav-links">
       <li><a routerLink="/inicio" routerLinkActive="active">INICIO</a></li>
+
+      <ng-container *ngIf="authService.isLoggedIn()">
       <li><a routerLink="/clientes" routerLinkActive="active">CLIENTES</a></li>
       <li><a routerLink="/bicicletas" routerLinkActive="active">BICICLETAS</a></li>
       <li><a routerLink="/inventario" routerLinkActive="active">INVENTARIO</a></li>
       <li><a routerLink="/reportes" routerLinkActive="active">REPORTES</a></li>
       <li><a routerLink="/ventas" routerLinkActive="active">VENTAS</a></li>
+      </ng-container>
     </ul>
 
     <div class="nav-actions">

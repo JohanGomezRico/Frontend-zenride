@@ -11,13 +11,13 @@ import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'inicio', component: InicioComponent, canActivate: [authGuard] },
+  { path: 'inicio', component: InicioComponent },
   { path: 'clientes', component: ClienteComponent, canActivate: [authGuard] },
   { path: 'bicicletas', component: BicicletasComponent, canActivate: [authGuard] },
   { path: 'inventario', component: InventarioMovimientoComponent, canActivate: [authGuard] },
   { path: 'ventas', component: VentasComponent, canActivate: [authGuard] },
   { path: 'reportes', component: ReportesComponent, canActivate: [authGuard] },
   { path: 'bicicleta/:id', component: DetalleBicicletaComponent }, // Esta es la línea que agregaste
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/login' }
+  { path: '', redirectTo: '/inicio', pathMatch: 'full' },
+  { path: '**', redirectTo: '/inicio' }
 ];
