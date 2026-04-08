@@ -8,12 +8,10 @@ import { ReportesComponent } from './components/reportes/reportes.component';
 import { DetalleBicicletaComponent } from './components/detalle-bicicleta/detalle-bicicleta.component';
 import { LoginComponent } from './components/login/login.component';
 import { authGuard } from './guards/auth.guard';
-import { RegistroClienteComponent } from './components/registro-cliente/registro-cliente.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'registro', component: RegistroClienteComponent },
   { path: 'inicio', component: InicioComponent },
   { path: 'admin-panel', component: AdminPanelComponent },
   { path: 'clientes', component: ClienteComponent, canActivate: [authGuard] },

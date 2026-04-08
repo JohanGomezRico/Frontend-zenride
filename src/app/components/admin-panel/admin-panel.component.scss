@@ -1,8 +1,8 @@
 // Paleta Zen Ride
 $bg-main: #111111;
 $bg-card: #1a1a1a;
-$neon-green: #c6ff00;
-$neon-hover: #d4ff33;
+$neon-green: #ccff00;
+$neon-hover: #ccff00;
 $text-light: #ffffff;
 $text-muted: #a0a0a0;
 $border-color: #333333;
@@ -24,19 +24,19 @@ $border-color: #333333;
   border-bottom: 1px solid $border-color;
   padding-bottom: 20px;
 
-  h2 { margin: 0 0 5px 0; font-size: 32px; color: $neon-green; span { color: $neon-green; } }
+  h2 { margin: 0 0 5px 0; font-size: 32px; color: black; span { color: black; } }
   p { margin: 0; color: $text-muted; }
 }
 
 // Botones Neon
 .btn-neon {
-  background: transparent; color: $neon-green; border: 1px solid $neon-green; padding: 10px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: all 0.3s;
+  background: #ccff00; color: black; border: 1px solid $neon-green; padding: 10px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: all 0.3s;
   &:hover { background: rgba(198, 255, 0, 0.1); box-shadow: 0 0 10px rgba(198, 255, 0, 0.3); }
 }
 
 .btn-neon-solid {
-  background: $neon-green; color: #000; border: none; padding: 12px 25px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: all 0.3s; width: 100%; margin-top: 15px;
-  &:hover:not(:disabled) { background: $neon-hover; transform: translateY(-2px); }
+  background: #ccff00; color: #000; border: none; padding: 12px 25px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: all 0.3s; width: 100%; margin-top: 15px;
+  &:hover:not(:disabled) { background: black; transform: translateY(-2px); }
   &:disabled { background: #444; color: #888; cursor: not-allowed; }
 }
 
@@ -75,7 +75,7 @@ $border-color: #333333;
             background: none; border: none; color: white; cursor: pointer; padding: 5px; border-radius: 5px; transition: background-color 0.2s, color 0.2s; display: flex; align-items: center;
             mat-icon { font-size: 20px; }
             &:hover { background-color: rgba(255, 255, 255, 0.1); }
-            &.btn-change-role { &:hover { color: $neon-green; background-color: rgba(198, 255, 0, 0.1); } }
+            &.btn-change-role { &:hover { color: #ccff00; background-color: rgba(198, 255, 0, 0.1); } }
             &.btn-delete { &:hover { color: #ff4c4c; background-color: rgba(255, 76, 76, 0.1); } }
           }
         }
@@ -88,6 +88,27 @@ $border-color: #333333;
 .badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; letter-spacing: 0.5px;
   &-admin { background-color: rgba(198, 255, 0, 0.2); color: $neon-green; border: 1px solid $neon-green; }
   &-vendedor { background-color: rgba(0, 191, 255, 0.2); color: #00bfff; border: 1px solid #00bfff; }
-  &-cliente { background-color: rgba(160, 160, 160, 0.2); color: $text-muted; border: 1px solid $text-muted; }
+}
+
+::ng-deep {
+  .swal2-select {
+    background-color: #2a2a2a !important; // Fondo oscuro para el select
+    color: white !important;              // Texto blanco
+    border: 1px solid #333 !important;
+    border-radius: 4px !important;
+    padding: 10px !important;
+
+    // Estilo para las opciones de adentro
+    option {
+      background-color: #2a2a2a !important; 
+      color: white !important;
+    }
+  }
+
+  // Estilo para el borde neón de la alerta que ya tenías
+  .border-neon {
+    border: 2px solid #ccff00 !important;
+    box-shadow: 0 0 15px rgba(204, 255, 0, 0.2) !important;
+  }
 }
 

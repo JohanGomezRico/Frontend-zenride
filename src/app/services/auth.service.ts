@@ -28,20 +28,6 @@ export class AuthService {
       );
   }
 
-  // NUEVO MÉTODO: Para registrar clientes desde la página web
-  registroCliente(datosUsuario: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/registro-cliente`, datosUsuario)
-      .pipe(
-        tap(response => {
-          // Si el registro es exitoso, el backend nos devuelve el token.
-          // Lo guardamos inmediatamente para que el cliente quede logueado.
-          if (response && response.token) {
-            this.setToken(response.token);
-          }
-        })
-      );
-  }
-
   // 2. Guardar el token en el LocalStorage
   private setToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);

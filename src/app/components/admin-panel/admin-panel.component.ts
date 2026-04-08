@@ -41,12 +41,11 @@ export class AdminPanelComponent implements OnInit {
       inputOptions: {
         'ADMIN': 'Administrador',
         'VENDEDOR': 'Vendedor',
-        'CLIENTE': 'Cliente'
       },
       inputValue: user.rol,
       background: '#1a1a1a',
       color: '#ffffff',
-      confirmButtonColor: '#c6ff00',
+      confirmButtonColor: '#b6e400',
       confirmButtonText: 'Actualizar',
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
