@@ -8,21 +8,15 @@
     <ul class="nav-links">
       <li><a routerLink="/inicio" routerLinkActive="active">INICIO</a></li>
 
-      <!-- <ng-container *ngIf="authService.isAdmin()">
-        
-      </ng-container> -->
-
-      <ng-container *ngIf="authService.isMasterAdmin()">
-        <li><a routerLink="/clientes" routerLinkActive="active">CLIENTES</a></li>
-        <li><a routerLink="/ventas" routerLinkActive="active">VENTAS</a></li>
-      <li><a routerLink="/bicicletas" routerLinkActive="active">BICICLETAS</a></li>
-      <li><a routerLink="/inventario" routerLinkActive="active">INVENTARIO</a></li>
-      <li><a routerLink="/reportes" routerLinkActive="active">REPORTES</a></li>
-      <ng-container *ngIf="authService.isVendedor()">
+      <ng-container *ngIf="authService.isAdmin() || authService.isVendedor()">
         <li><a routerLink="/clientes" routerLinkActive="active">CLIENTES</a></li>
         <li><a routerLink="/ventas" routerLinkActive="active">VENTAS</a></li>
       </ng-container>
-      
+
+      <ng-container *ngIf="authService.isMasterAdmin()">
+      <li><a routerLink="/bicicletas" routerLinkActive="active">BICICLETAS</a></li>
+      <li><a routerLink="/inventario" routerLinkActive="active">INVENTARIO</a></li>
+      <li><a routerLink="/reportes" routerLinkActive="active">REPORTES</a></li>
       <li>
       <a routerLink="/admin-panel" routerLinkActive="active" class="admin-link">
         ⚙️ PANEL ADMIN
