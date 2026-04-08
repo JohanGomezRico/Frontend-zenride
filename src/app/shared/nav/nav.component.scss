@@ -50,6 +50,10 @@
 
     &:hover { color: white; }
 
+    &.admin-link {
+      font-weight: 800;
+    }
+
     &.active {
       color: #ccff00;
       &::after {

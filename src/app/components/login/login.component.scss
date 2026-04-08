@@ -12,7 +12,7 @@ $error-red: #ff4c4c;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 75vh;
+  min-height: 90vh;
   background-color: transparent;
 
   .login-card {
@@ -104,4 +104,31 @@ $error-red: #ff4c4c;
       }
     }
   }
+
+  .auth-footer {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #cccccc; /* Un gris claro para la pregunta */
+  
+  p {
+    margin: 0; 
+    line-height: 1.5;
+  }
+
+  a {
+    color: #b0ff00; /* Tu verde neón característico */
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin-top: 5px;
+    
+    &:hover {
+      text-decoration: underline;
+      color: #ccff66; /* Un poco más brillante al pasar el mouse */
+      text-shadow: 0 0 8px rgba(176, 255, 0, 0.4);
+    }
+  }
+}
 }

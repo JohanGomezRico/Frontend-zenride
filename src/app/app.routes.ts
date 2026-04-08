@@ -8,10 +8,12 @@ import { ReportesComponent } from './components/reportes/reportes.component';
 import { DetalleBicicletaComponent } from './components/detalle-bicicleta/detalle-bicicleta.component';
 import { LoginComponent } from './components/login/login.component';
 import { authGuard } from './guards/auth.guard';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'inicio', component: InicioComponent },
+  { path: 'admin-panel', component: AdminPanelComponent },
   { path: 'clientes', component: ClienteComponent, canActivate: [authGuard] },
   { path: 'bicicletas', component: BicicletasComponent, canActivate: [authGuard] },
   { path: 'inventario', component: InventarioMovimientoComponent, canActivate: [authGuard] },

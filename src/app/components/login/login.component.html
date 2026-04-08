@@ -7,7 +7,7 @@
     
     <div class="input-group">
       <label>Usuario</label>
-      <input type="text" [(ngModel)]="username" placeholder="Ej. miguel_admin">
+      <input type="text" [(ngModel)]="username" placeholder="Ingresa tu usuario">
     </div>
 
     <div class="input-group">
@@ -18,5 +18,6 @@
     <p class="error-msg" *ngIf="errorMessage">{{ errorMessage }}</p>
 
     <button class="login-btn" (click)="onLogin()">INGRESAR</button>
+
   </div>
 </div>

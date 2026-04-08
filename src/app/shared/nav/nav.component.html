@@ -8,12 +8,20 @@
     <ul class="nav-links">
       <li><a routerLink="/inicio" routerLinkActive="active">INICIO</a></li>
 
-      <ng-container *ngIf="authService.isLoggedIn()">
-      <li><a routerLink="/clientes" routerLinkActive="active">CLIENTES</a></li>
+      <ng-container *ngIf="authService.isAdmin() || authService.isVendedor()">
+        <li><a routerLink="/clientes" routerLinkActive="active">CLIENTES</a></li>
+        <li><a routerLink="/ventas" routerLinkActive="active">VENTAS</a></li>
+      </ng-container>
+
+      <ng-container *ngIf="authService.isMasterAdmin()">
       <li><a routerLink="/bicicletas" routerLinkActive="active">BICICLETAS</a></li>
       <li><a routerLink="/inventario" routerLinkActive="active">INVENTARIO</a></li>
       <li><a routerLink="/reportes" routerLinkActive="active">REPORTES</a></li>
-      <li><a routerLink="/ventas" routerLinkActive="active">VENTAS</a></li>
+      <li>
+      <a routerLink="/admin-panel" routerLinkActive="active" class="admin-link">
+        ⚙️ PANEL ADMIN
+      </a>
+      </li>
       </ng-container>
     </ul>
 
@@ -23,12 +31,8 @@
       </button>
       <button class="icon-btn" (click)="onLogout()" *ngIf="authService.isLoggedIn()" title="Cerrar sesión">
         <mat-icon>exit_to_app</mat-icon> </button>
-        
-      <button class="icon-btn"><mat-icon>favorite_border</mat-icon></button>
-      <button class="icon-btn cart-btn">
-        <mat-icon>shopping_bag</mat-icon>
-        <span class="cart-count">0</span>
-      </button>
+
+      
     </div>
   </div>
 </nav>

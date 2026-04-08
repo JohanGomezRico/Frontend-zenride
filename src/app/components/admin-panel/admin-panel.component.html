@@ -1,0 +1,87 @@
+<div class="admin-wrapper">
+    <div class="admin-header">
+        <div class="title-section">
+            <h2>Panel de <span>Administración</span></h2>
+            <p>Gestiona los usuarios y el equipo de trabajo de Zen Ride.</p>
+        </div>
+
+        <button class="btn-neon" (click)="toggleFormulario()">
+            {{ mostrarFormulario ? 'CANCELAR' : '+ NUEVO MIEMBRO' }}
+        </button>
+    </div>
+
+    <div class="form-card" *ngIf="mostrarFormulario">
+        <h3>Crear Nuevo Admin / Vendedor</h3>
+
+        <form (ngSubmit)="crearUsuarioEquipo()">
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Nombre de Usuario *</label>
+                    <input type="text" name="username" [(ngModel)]="nuevoUsuario.username" placeholder="Ej. juan_admin"
+                        required>
+                </div>
+                <div class="input-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" name="email" [(ngModel)]="nuevoUsuario.email" placeholder="correo@empresa.com">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Contraseña *</label>
+                    <input type="password" name="password" [(ngModel)]="nuevoUsuario.password"
+                        placeholder="Contraseña segura" required>
+                </div>
+                <div class="input-group">
+                    <label>Asignar Rol *</label>
+                    <select name="rol" [(ngModel)]="nuevoUsuario.rol">
+                        <option value="ADMIN">Administrador Master</option>
+                        <option value="VENDEDOR">Vendedor en Tienda</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn-neon-solid" [disabled]="cargando">
+                {{ cargando ? 'GUARDANDO...' : 'CREAR USUARIO' }}
+            </button>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>USUARIO</th>
+                    <th>CORREO ELÉCTRONICO</th>
+                    <th>ROL DEL SISTEMA</th>
+                    <th class="actions-header">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of usuarios">
+                    <td>#{{ user.id }}</td>
+                    <td class="fw-bold">{{ user.username }}</td>
+                    <td>{{ user.email ? user.email : 'No registrado' }}</td>
+                    <td>
+                        <span class="badge"
+                            [ngClass]="{'badge-admin': user.rol === 'ADMIN', 'badge-vendedor': user.rol === 'VENDEDOR', 'badge-cliente': user.rol === 'CLIENTE'}">
+                            {{ user.rol }}
+                        </span>
+                    </td>
+                    <td class="actions-cell">
+                        <div class="action-buttons">
+                            <button class="btn-icon btn-change-role" (click)="cambiarRol(user)" title="Cambiar Rol">
+                                <mat-icon>cached</mat-icon>
+                            </button>
+                            <button class="btn-icon btn-delete" (click)="eliminarUser(user)" title="Eliminar Usuario">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="usuarios.length === 0">
+                    <td colspan="5" class="empty-state">No hay usuarios registrados.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
