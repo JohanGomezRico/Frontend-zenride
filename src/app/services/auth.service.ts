@@ -7,8 +7,7 @@ import { Observable, tap } from 'rxjs';
 })
 export class AuthService {
   // Aquí va tu enlace real de Railway apuntando al controlador Auth
-  //private apiUrl = 'https://project-zenride-production.up.railway.app/api/auth';
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = 'https://project-zenride-production.up.railway.app/api/auth';
   
   // El nombre con el que guardaremos el token en la memoria del navegador
   private tokenKey = 'zenride_token';
