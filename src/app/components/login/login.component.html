@@ -18,5 +18,10 @@
     <p class="error-msg" *ngIf="errorMessage">{{ errorMessage }}</p>
 
     <button class="login-btn" (click)="onLogin()">INGRESAR</button>
+
+    <div class="auth-footer">
+      <p>¿Aún no tienes una cuenta?</p>
+      <a routerLink="/registro">Regístrate aquí para reservar tus bicicletas</a>
+    </div>
   </div>
 </div>

@@ -8,14 +8,14 @@ $input-bg: #2a2a2a;
 $input-border: #3d3d3d;
 $error-red: #ff4c4c;
 
-.login-wrapper {
+.registro-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 90vh;
   background-color: transparent;
 
-  .login-card {
+  .registro-card {
     background-color: $bg-dark;
     padding: 40px;
     border-radius: 8px;
@@ -38,16 +38,6 @@ $error-red: #ff4c4c;
         color: $text-muted;
         margin: 0;
         font-size: 16px;
-
-        span:first-child {
-          color: $text-light;
-          font-weight: bold;
-        }
-
-        .highlight {
-          color: $neon-green;
-          font-weight: bold;
-        }
       }
     }
 
@@ -86,7 +76,7 @@ $error-red: #ff4c4c;
       margin-bottom: 15px;
     }
 
-    .login-btn {
+    .registro-btn {
       width: 100%;
       padding: 14px;
       background-color: $neon-green;
@@ -97,38 +87,45 @@ $error-red: #ff4c4c;
       font-size: 16px;
       cursor: pointer;
       transition: transform 0.2s, background-color 0.2s;
+      margin-top: 10px;
 
-      &:hover {
+      &:hover:not(:disabled) {
         background-color: $neon-hover;
         transform: translateY(-2px);
       }
+
+      &:disabled {
+        background-color: #555;
+        color: #888;
+        cursor: not-allowed;
+      }
+    }
+
+    .auth-footer {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #cccccc; 
+      
+      p {
+        margin: 0; 
+        line-height: 1.5;
+      }
+
+      a {
+        color: #b0ff00; 
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+        margin-top: 5px;
+        
+        &:hover {
+          text-decoration: underline;
+          color: #ccff66; 
+          text-shadow: 0 0 8px rgba(176, 255, 0, 0.4);
+        }
+      }
     }
   }
-
-  .auth-footer {
-  margin-top: 25px;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #cccccc; /* Un gris claro para la pregunta */
-  
-  p {
-    margin: 0; 
-    line-height: 1.5;
-  }
-
-  a {
-    color: #b0ff00; /* Tu verde neón característico */
-    font-weight: bold;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: inline-block;
-    margin-top: 5px;
-    
-    &:hover {
-      text-decoration: underline;
-      color: #ccff66; /* Un poco más brillante al pasar el mouse */
-      text-shadow: 0 0 8px rgba(176, 255, 0, 0.4);
-    }
-  }
-}
 }
