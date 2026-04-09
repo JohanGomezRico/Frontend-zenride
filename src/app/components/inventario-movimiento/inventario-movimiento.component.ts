@@ -7,8 +7,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDatepickerModule } from '@angular/material/datepicker'; // Nuevo para fecha
-import { MatNativeDateModule } from '@angular/material/core'; // Nuevo para fecha
+import { MatDatepickerModule } from '@angular/material/datepicker'; 
+import { MatNativeDateModule } from '@angular/material/core'; 
 import { InventarioService } from '../../services/inventario.service';
 import { BicicletaService } from '../../services/bicicleta.service';
 
@@ -18,7 +18,7 @@ import { BicicletaService } from '../../services/bicicleta.service';
   imports: [
     CommonModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, 
     MatInputModule, MatSelectModule, MatButtonModule, MatTableModule, MatIconModule,
-    MatDatepickerModule, MatNativeDateModule // Asegúrate de importar estos
+    MatDatepickerModule, MatNativeDateModule 
   ],
   templateUrl: './inventario-movimiento.component.html',
   styleUrl: './inventario-movimiento.component.scss'
@@ -32,11 +32,10 @@ export class InventarioMovimientoComponent implements OnInit {
   bicicletas: any[] = [];
   historial: any[] = [];
   
-  // 🚩 FILTROS AMPLIADOS
   filtros = {
-    texto: '',    // Para responsable
-    codigo: '',   // Nuevo: Para código de bici
-    tipo: '',     // Cambiado a vacío para que "Todos" sea la opción inicial
+    texto: '',    
+    codigo: '',   
+    tipo: '',     
     fecha: '' 
   };
 
@@ -83,30 +82,23 @@ export class InventarioMovimientoComponent implements OnInit {
     this.inventarioService.getMovimientos().subscribe(res => this.historial = res || []);
   }
 
-  // 🚩 LÓGICA DE FILTRADO ACUMULATIVO
   get historialFiltrado() {
     return this.historial.filter(m => {
-      // Filtro por Responsable
       const cumpleResponsable = !this.filtros.texto || 
         m.responsableOperacion?.toLowerCase().includes(this.filtros.texto.toLowerCase());
 
-      // Filtro por Código de Bicicleta (Convierte a string para comparar)
       const cumpleCodigo = !this.filtros.codigo || 
         m.bicicletaCodigo?.toString().includes(this.filtros.codigo);
 
-      // Filtro por Tipo (Entrada/Salida)
       const cumpleTipo = !this.filtros.tipo || m.tipoMovimiento === this.filtros.tipo;
 
-      // Filtro por Fecha
       let cumpleFecha = true;
       if (this.filtros.fecha) {
-        // Si la fecha viene de un datepicker como objeto, la pasamos a string YYYY-MM-DD
         const fechaFiltro = new Date(this.filtros.fecha).toISOString().substring(0, 10);
         const fechaMovimiento = m.fechaMovimiento?.substring(0, 10);
         cumpleFecha = fechaMovimiento === fechaFiltro;
       }
 
-      // Solo se muestra si CUMPLE TODAS las condiciones
       return cumpleResponsable && cumpleCodigo && cumpleTipo && cumpleFecha;
     });
   }
@@ -115,9 +107,26 @@ export class InventarioMovimientoComponent implements OnInit {
     return this.bicicletas.reduce((acc, b) => acc + (b.stockActual || 0), 0);
   }
 
+  // --- FUNCIÓN CORREGIDA PARA COLOMBIA (UTC-5) ---
+  private obtenerFechaLocal(): string {
+    const ahora = new Date();
+    const anio = ahora.getFullYear();
+    const mes = String(ahora.getMonth() + 1).padStart(2, '0');
+    const dia = String(ahora.getDate()).padStart(2, '0');
+    const horas = String(ahora.getHours()).padStart(2, '0');
+    const minutos = String(ahora.getMinutes()).padStart(2, '0');
+    const segundos = String(ahora.getSeconds()).padStart(2, '0');
+    
+    // Al añadir -05:00 forzamos que el sistema reconozca la hora de Colombia
+    return `${anio}-${mes}-${dia}T${horas}:${minutos}:${segundos}-05:00`;
+  }
+
   guardar(): void {
     if (this.movimientoForm.valid) {
-      const datosEnviar = { ...this.movimientoForm.value };
+      const datosEnviar = { 
+        ...this.movimientoForm.value,
+        fechaMovimiento: this.obtenerFechaLocal() 
+      };
       
       this.inventarioService.registrarMovimiento(datosEnviar).subscribe({
         next: () => {

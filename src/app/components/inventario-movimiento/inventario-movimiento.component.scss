@@ -75,11 +75,12 @@ h2 {
   100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); }
 }
 
-// 3. Formulario ZenRide (Modificado para Lotes)
+// 3. Formulario ZenRide (Estilo Segunda Imagen)
 .formulario-inventario {
   background: #fff;
   padding: 30px;
   border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08); // Sombra suave como en Bicicletas
   
   .form-row {
     display: grid;
@@ -101,17 +102,12 @@ h2 {
     strong { font-weight: 900; }
   }
 
-  .w-100 {
-    width: 100%;
-    margin-top: 10px;
-  }
-
   .fila-lote-dinamica {
     display: flex;
     gap: 15px;
     align-items: center;
     margin-bottom: 12px;
-    padding: 12px;
+    padding: 15px;
     background: #f8f9fa;
     border-radius: 10px;
     border: 1px dashed #ccc;
@@ -130,24 +126,34 @@ h2 {
       color: #000; 
       font-weight: bold;
       flex: 1;
-    }
-    
-    .btn-guardar {
-      flex: 1;
+      border-radius: 8px;
+      height: 45px;
     }
   }
 }
 
-// 4. EL BOTÓN NEGRO (ZenRide Style)
+// 4. ESTILOS DE MATERIAL (Inputs Grises y Botón Negro)
 ::ng-deep {
+  // Fondo gris para los inputs como en la imagen 2
+  .mat-mdc-text-field-wrapper {
+    background-color: #e2e5ec !important; 
+    border-radius: 4px 4px 0 0 !important;
+  }
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+
+  // El botón negro con animación de la imagen 2
   .mat-mdc-raised-button.mat-primary {
     background-color: #000 !important;
     color: #fff !important;
     padding: 12px 0 !important;
     font-weight: 700 !important;
     letter-spacing: 1.5px;
-    border-radius: 8px !important;
+    border-radius: 25px !important; // Redondeado tipo cápsula
     transition: all 0.3s ease-in-out !important;
+    flex: 1;
 
     &:hover:not(:disabled) {
       background-color: #333 !important;
@@ -161,18 +167,21 @@ h2 {
     }
   }
 
-  .mat-mdc-form-field {
-    width: 100%;
+  // Estilo para el buscador (hacerlo más corto)
+  .buscador-inventario {
+    max-width: 300px;
+    margin: 20px auto;
+    display: block;
   }
 }
 
-// 5. Tabla de Historial con SCROLL
+// 5. Tabla de Historial
 .tabla-contenedor {
+  margin-top: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   max-height: 480px;
   overflow-y: auto;
-  overflow-x: hidden;
   background: white;
 
   table { width: 100%; }
@@ -182,13 +191,18 @@ h2 {
     top: 0;
     z-index: 10;
     background: #f8f9fa !important;
-    color: #000;
+    color: #555;
     font-weight: 900;
     text-transform: uppercase;
     font-size: 0.75rem;
+    padding: 15px !important;
   }
 
-  // --- MEJORA PROFESIONAL PARA TIPO ---
+  .mat-mdc-cell {
+    padding: 12px !important;
+    font-size: 0.85rem;
+  }
+
   .badge-tipo {
     display: inline-block;
     padding: 5px 12px;
@@ -196,32 +210,16 @@ h2 {
     font-size: 0.7rem;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    text-align: center;
     min-width: 80px;
+    text-align: center;
 
-    &.entrada {
-      background-color: #e8f5e9;
-      color: #2e7d32;
-      border: 1px solid #c8e6c9;
-    }
-
-    &.salida {
-      background-color: #fff1f0;
-      color: #cf1322;
-      border: 1px solid #ffa39e;
-    }
-  }
-
-  .item-historial {
-    font-size: 0.85rem;
-    padding: 2px 0;
-    border-bottom: 1px solid #f0f0f0;
-    &:last-child { border: none; }
+    &.entrada { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+    &.salida { background-color: #fff1f0; color: #cf1322; border: 1px solid #ffa39e; }
   }
 
   .mat-mdc-row:hover {
-    background-color: #fafafa;
+    background-color: #f1f8e9; // Verde sutil al pasar el mouse
+    transition: background-color 0.2s;
   }
 }
 
@@ -231,23 +229,7 @@ h2 {
   margin: 30px 0;
 }
 
-// 6. Responsive
-@media (max-width: 768px) {
-  .resumen-bodega {
-    flex-direction: column;
-    .card-stock-total { border-right: none; border-bottom: 2px solid #eee; padding-bottom: 15px; }
-  }
-  
-  .fila-lote-dinamica {
-    flex-direction: column;
-    .select-bici, .input-cantidad { max-width: 100%; width: 100%; }
-  }
-
-  .acciones-form {
-    flex-direction: column;
-  }
-}
-
+// 6. Scrollbar Estilizada
 .tabla-contenedor::-webkit-scrollbar { width: 6px; }
 .tabla-contenedor::-webkit-scrollbar-track { background: #f1f1f1; }
 .tabla-contenedor::-webkit-scrollbar-thumb { background: #000; border-radius: 10px; }
