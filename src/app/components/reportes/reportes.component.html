@@ -1,59 +1,189 @@
 <div class="reportes-container">
   
   <div class="header-section">
-    <h1>PANEL DE REPORTES <span class="icon"></span></h1>
+    <h1>DASHBOARD DE REPORTES <span>ZEN RIDE</span></h1>
     
-    <div class="filtros-card">
-      <div class="fechas-group">
+    <div class="control-panel">
+      <div class="filters-grid">
         <div class="input-group">
-          <label>Fecha Inicio</label>
+          <label>Desde</label>
           <input type="date" [(ngModel)]="fechaInicio" (change)="cargarDatos()">
         </div>
         <div class="input-group">
-          <label>Fecha Fin</label>
+          <label>Hasta</label>
           <input type="date" [(ngModel)]="fechaFin" (change)="cargarDatos()">
+        </div>
+        <div class="input-group">
+          <label>Tipo de Bicicleta</label>
+          <select [(ngModel)]="filtroTipo" (change)="cargarDatos()">
+            <option value="Todos">Todas las categorías</option>
+            <option *ngFor="let t of tiposBicicleta" [value]="t">{{ t }}</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Marca</label>
+          <select [(ngModel)]="filtroMarca" (change)="cargarDatos()">
+            <option value="Todas">Todas las marcas</option>
+            <option *ngFor="let m of marcas" [value]="m">{{ m }}</option>
+          </select>
         </div>
       </div>
       
-      <button class="btn-pdf" (click)="descargarPDF()" [disabled]="cargando">
-        <span class="icon">📥</span> DESCARGAR PDF
-      </button>
+      <div class="export-actions">
+        <button class="btn-export excel" (click)="descargarExcel()" [disabled]="cargando">
+          📊 EXCEL
+        </button>
+        <button class="btn-export pdf" (click)="descargarPDF()" [disabled]="cargando">
+          📄 PDF
+        </button>
+      </div>
     </div>
   </div>
 
-  <div *ngIf="cargando" class="loading">Cargando datos del periodo...</div>
+  <div *ngIf="cargando" class="loading">Sincronizando métricas de negocio...</div>
 
   <div class="dashboard-grid" *ngIf="datosReporte && !cargando">
     
     <div class="stat-card main-card">
-      <h3>Ingresos Brutos Totales</h3>
+      <div class="card-header">
+        <h3>Ingresos Brutos Totales</h3>
+        <div class="trend" [ngClass]="datosReporte.tendenciaIngresos?.positiva ? 'up' : 'down'">
+          {{ datosReporte.tendenciaIngresos?.positiva ? '↑' : '↓' }} {{ datosReporte.tendenciaIngresos?.valor }}%
+        </div>
+      </div>
       <div class="number text-highlight">{{ datosReporte.ingresosBrutosTotales | currency:'COP':'symbol-narrow':'1.0-0' }}</div>
-      <p class="subtitle">{{ datosReporte.periodo }}</p>
+      <p class="subtitle">Del {{ fechaInicio }} al {{ fechaFin }}</p>
     </div>
 
     <div class="stat-card">
-      <h3>Bicicletas Vendidas</h3>
+      <div class="card-header">
+        <h3>Bicicletas Vendidas</h3>
+        <div class="trend up">↑ 8.2%</div>
+      </div>
       <div class="number">{{ datosReporte.totalBicicletasVendidas }}</div>
-      <p class="subtitle">Unidades entregadas</p>
+      <p class="subtitle">Unidades facturadas</p>
     </div>
 
     <div class="stat-card">
-      <h3>Entradas de Inventario</h3>
+      <div class="card-header">
+        <h3>Entradas de Inventario</h3>
+      </div>
       <div class="number">{{ datosReporte.totalEntradas }}</div>
       <p class="subtitle">Nuevas unidades ingresadas</p>
     </div>
 
     <div class="stat-card">
-      <h3>Salidas / Ajustes</h3>
+      <div class="card-header">
+        <h3>Salidas / Ajustes</h3>
+        <div class="trend down">↓ 2.1%</div>
+      </div>
       <div class="number">{{ datosReporte.totalSalidas }}</div>
       <p class="subtitle">Unidades retiradas</p>
     </div>
 
     <div class="stat-card">
-      <h3>Stock Actual Global</h3>
+      <div class="card-header">
+        <h3>Stock Actual Global</h3>
+      </div>
       <div class="number text-highlight">{{ datosReporte.bicicletasEnStock }}</div>
-      <p class="subtitle">Bicicletas activas en el sistema</p>
+      <p class="subtitle">Valorizado en inventario</p>
     </div>
 
   </div>
-</div>
+
+  <div class="charts-grid" *ngIf="datosReporte && !cargando">
+    
+    <div class="chart-card large">
+      <div class="chart-header">
+        <h3>Evolución de Ingresos</h3>
+        <p>Tendencia de ventas en el periodo seleccionado</p>
+      </div>
+      <div class="canvas-container">
+        <canvas baseChart 
+          [data]="lineChartData" 
+          [options]="lineChartOptions" 
+          type="line">
+        </canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3>Top 5 Bicicletas</h3>
+        <p>Modelos con mayor volumen de salida</p>
+      </div>
+      <div class="canvas-container">
+        <canvas baseChart 
+          [data]="barChartData" 
+          [options]="barChartOptions" 
+          type="bar">
+        </canvas>
+      </div>
+    </div>
+
+    <div class="tables-grid" *ngIf="datosReporte && !cargando">
+    
+    <div class="table-card">
+      <div class="card-header">
+        <h3>Últimos Movimientos Registrados</h3>
+        <button class="btn-link">Ver historial completo →</button>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>FECHA</th>
+              <th>PRODUCTO PRINCIPAL</th>
+              <th>CLIENTE/USUARIO</th>
+              <th>VALOR TOTAL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let venta of historialVentas">
+              <td>{{ venta.fecha }}</td>
+              <td class="product-name">{{ venta.producto }}</td>
+              <td>{{ venta.cliente }}</td>
+              <td class="text-highlight">{{ venta.total | currency:'COP':'symbol-narrow':'1.0-0' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="table-card warning-card">
+      <div class="card-header">
+        <h3>Alertas de Inventario</h3>
+        <span class="badge-error">{{ stockBajo.length }} Críticos</span>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>MODELO</th>
+              <th>STOCK</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of stockBajo">
+              <td>
+                <div class="item-info">
+                  <span class="name">{{ item.producto }}</span>
+                  <span class="category">{{ item.categoria }}</span>
+                </div>
+              </td>
+              <td>
+                <span class="stock-badge" [class.zero]="item.stock === 0">
+                  {{ item.stock }} uds
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  </div>
+  
+  </div>

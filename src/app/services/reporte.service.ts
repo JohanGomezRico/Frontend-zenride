@@ -9,22 +9,30 @@ import { environment } from '../../environments/environment';
 export class ReporteService {
 
   private http = inject(HttpClient);
-  private apiUrl = environment.urlBackend;
+  private baseUrl = environment.urlBackend.replace(/\/$/, '');
+  private apiUrl = `${this.baseUrl}/api/reportes`;
 
-  // Obtener los datos para las tarjetas
-  getResumen(fechaInicio: string, fechaFin: string): Observable<any> {
+  // 👇 1. Actualizamos getResumen para recibir los 5 parámetros
+  getResumen(fechaInicio: string, fechaFin: string, tipo: string, marca: string, vendedor: string): Observable<any> {
     let params = new HttpParams()
       .set('fechaInicio', fechaInicio)
-      .set('fechaFin', fechaFin);
-    return this.http.get<any>(`${this.apiUrl}api/reportes/resumen`, { params });
+      .set('fechaFin', fechaFin)
+      .set('tipo', tipo)
+      .set('marca', marca)
+      .set('vendedor', vendedor);
+
+    return this.http.get<any>(`${this.apiUrl}/resumen`, { params });
   }
 
-  // Descargar el PDF
-  descargarPdf(fechaInicio: string, fechaFin: string): Observable<Blob> {
+  // 👇 2. Actualizamos descargarPdf para que el PDF también salga filtrado
+  descargarPdf(fechaInicio: string, fechaFin: string, tipo: string, marca: string, vendedor: string): Observable<Blob> {
     let params = new HttpParams()
       .set('fechaInicio', fechaInicio)
-      .set('fechaFin', fechaFin);
-    // IMPORTANTE: responseType 'blob' para manejar archivos
-    return this.http.get(`${this.apiUrl}api/reportes/descargar-pdf`, { params, responseType: 'blob' });
+      .set('fechaFin', fechaFin)
+      .set('tipo', tipo)
+      .set('marca', marca)
+      .set('vendedor', vendedor);
+
+    return this.http.get(`${this.apiUrl}/descargar-pdf`, { params, responseType: 'blob' });
   }
 }

@@ -150,3 +150,189 @@
     margin: 0;
   }
 }
+
+/* --- NUEVOS ESTILOS DASHBOARD BI --- */
+
+.header-section h1 span {
+  color: #ccff00;
+}
+
+.control-panel {
+  background-color: #1a1a1a;
+  border-top: 3px solid #ccff00;
+  padding: 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.filters-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  flex: 1;
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 150px;
+
+    label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+    
+    input[type="date"], select {
+      background-color: #222; border: 1px solid #333; color: white; padding: 10px 15px;
+      border-radius: 6px; outline: none; font-size: 14px; transition: border 0.3s;
+      &:focus { border-color: #ccff00; }
+    }
+    
+    input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.6; cursor: pointer; }
+  }
+}
+
+.export-actions {
+  display: flex; gap: 10px;
+
+  .btn-export {
+    padding: 10px 20px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s;
+    &.excel { background-color: #1D6F42; color: white; &:hover { background-color: #278c55; } }
+    &.pdf { background-color: #ccff00; color: black; &:hover { background-color: #b3e600; } }
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+  }
+}
+
+/* --- TARJETAS CON TENDENCIA --- */
+.stat-card {
+  position: relative;
+  
+  .card-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+
+  .trend {
+    font-size: 12px; font-weight: bold; padding: 4px 8px; border-radius: 20px;
+    &.up { background-color: rgba(204, 255, 0, 0.1); color: #ccff00; }
+    &.down { background-color: rgba(255, 76, 76, 0.1); color: #ff4c4c; }
+  }
+}
+
+/* --- FASE 2: ESTILOS DE GRÁFICOS --- */
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* El de líneas ocupa 2/3, el de barras 1/3 */
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr; /* En pantallas pequeñas, uno debajo del otro */
+  }
+}
+
+.chart-card {
+  background-color: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+
+  .chart-header {
+    margin-bottom: 20px;
+    
+    h3 {
+      color: white;
+      margin: 0 0 5px 0;
+      font-size: 1.1rem;
+    }
+    
+    p {
+      color: #888;
+      margin: 0;
+      font-size: 0.85rem;
+    }
+  }
+
+  /* El contenedor es vital para que Chart.js sea responsivo */
+  .canvas-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+  }
+}
+
+/* --- FASE 3: ESTILOS DE TABLAS INFERIORES --- */
+
+.tables-grid {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr; /* La tabla de ventas es más ancha */
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr; /* Se apilan en pantallas pequeñas */
+  }
+}
+
+.table-card {
+  background-color: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+
+  &.warning-card {
+    border-top: 3px solid #ff4c4c; /* Línea roja para indicar alerta */
+  }
+
+  .card-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;
+
+    h3 { color: white; margin: 0; font-size: 1.1rem; }
+    
+    .btn-link { 
+      background: none; border: none; color: #ccff00; cursor: pointer; font-size: 0.85rem;
+      &:hover { text-decoration: underline; } 
+    }
+    
+    .badge-error { 
+      background-color: rgba(255, 76, 76, 0.1); color: #ff4c4c; padding: 4px 10px; 
+      border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid rgba(255, 76, 76, 0.3); 
+    }
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+  
+  table {
+    width: 100%; border-collapse: collapse; text-align: left;
+
+    th { color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; padding: 10px; border-bottom: 1px solid #333; }
+    
+    td { color: #ddd; font-size: 14px; padding: 12px 10px; border-bottom: 1px solid #1a1a1a; transition: 0.2s; }
+    
+    tr:hover td { background-color: rgba(255, 255, 255, 0.03); }
+    tr:last-child td { border-bottom: none; }
+    
+    .product-name { color: white; font-weight: 500; }
+    .text-highlight { color: #ccff00; font-weight: bold; }
+    
+    /* Estilos especiales para alertas de stock */
+    .item-info {
+      display: flex; flex-direction: column; gap: 4px;
+      .name { color: white; font-weight: 500; }
+      .category { color: #666; font-size: 11px; text-transform: uppercase; }
+    }
+
+    .stock-badge { 
+      background-color: rgba(255, 165, 0, 0.1); color: #ffa500; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 12px; border: 1px solid rgba(255, 165, 0, 0.3);
+      &.zero { background-color: rgba(255, 76, 76, 0.1); color: #ff4c4c; border-color: rgba(255, 76, 76, 0.3); }
+    }
+  }
+}
