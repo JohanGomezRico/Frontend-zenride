@@ -94,7 +94,7 @@ export class AdminPanelComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       background: '#1a1a1a',
       color: '#ffffff'
-    }).then((result) => {
+    }).then((result: any) => { // ✅ Corregido con ": any"
       if (result.isConfirmed) {
         this.authService.eliminarUsuario(user.id).subscribe({
           next: () => {

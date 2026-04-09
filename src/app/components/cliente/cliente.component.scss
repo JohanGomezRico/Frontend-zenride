@@ -14,47 +14,40 @@ h2 {
   letter-spacing: 1px;
 }
 
-// 2. Estilos del Formulario
-.formulario-clientes {
-  display: grid;
-  // Ajustamos el ancho máximo de cada columna a 280px para que no sean largos
-  grid-template-columns: repeat(auto-fit, minmax(200px, 280px)); 
-  gap: 15px;
-  background: #fff;
-  padding: 25px;
+// 2. Estilos del Formulario (Ajustado a tu HTML con Bootstrap)
+form.row {
+  background: #fff !important;
+  padding: 30px !important;
   border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  justify-content: center; // Esto centra los campos dentro del cuadro blanco
-
-  .col-12 {
-    grid-column: 1 / -1; 
-    display: flex;
-    justify-content: center;
-  }
+  // Quitamos el borde de bootstrap y dejamos la sombra limpia
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08) !important;
+  
+  // Esto asegura que los divs col-md-6 se comporten como 2 columnas perfectas
+  margin-left: 0;
+  margin-right: 0;
 }
 
 // 3. FIX: Tamaño de los campos de Material
 ::ng-deep {
-  // Limitamos el ancho de los mat-form-field específicamente
   .mat-mdc-form-field {
     width: 100%;
-    max-width: 280px; // AQUÍ controlas qué tan corto se ve el input
-    margin: 0 auto;
+    margin-bottom: 5px;
   }
   
-  .mat-mdc-form-field-can-float.mat-mdc-form-field-should-float .mat-mdc-floating-label {
-    transform: translateY(-28px) scale(0.75) !important;
-    background-color: white; 
-    padding: 0 8px;
+  // Estilo de fondo gris de los campos (como en la captura)
+  .mat-mdc-text-field-wrapper {
+    background-color: #e2e5ec !important; 
+    border-radius: 4px 4px 0 0 !important;
   }
 
-  // Animación para el botón
+  // Animación y estilo para el botón
   .mat-mdc-raised-button.mat-primary {
     background-color: #000 !important; 
     color: white !important;
-    margin-top: 10px;
-    padding: 10px 30px !important;
+    margin-top: 20px;
+    padding: 10px 40px !important;
     font-weight: bold !important;
+    border-radius: 25px !important; // Redondeado como Bicicletas
     transition: all 0.2s ease-in-out !important;
 
     &:hover:not(:disabled) {
@@ -65,8 +58,7 @@ h2 {
 
     &:active:not(:disabled) {
       transform: translateY(0);
-      background-color: #444 !important; 
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+      background-color: #444 !important;
     }
 
     &:disabled {
@@ -76,28 +68,23 @@ h2 {
   }
 }
 
-// 4. Buscador de la tabla reducido
+// 4. Buscador de la tabla
 .row.mb-3 {
-  margin-top: 20px;
+  margin-top: 30px;
   display: flex;
   justify-content: center; 
   
   .col-md-4 {
-    max-width: 250px; // El buscador también se hace más corto
+    max-width: 350px; 
   }
 }
 
 // 5. Tabla de Clientes
-.tabla-contenedor {
+.mat-elevation-z8 {
   margin-top: 20px;
   border-radius: 12px;
   overflow: hidden;
-  background: white;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-
-  table {
-    width: 100%;
-  }
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
 
   .mat-mdc-header-cell {
     background-color: #f8f9fa;
@@ -105,12 +92,16 @@ h2 {
     font-weight: 700;
     text-transform: uppercase;
     font-size: 0.8rem;
-    padding: 12px !important;
+    padding: 16px !important;
   }
 
   .mat-mdc-cell {
     font-size: 0.85rem;
     color: #444;
-    padding: 12px !important;
+    padding: 16px !important;
+  }
+
+  tr.mat-mdc-row:hover {
+    background-color: #f1f1f1;
   }
 }

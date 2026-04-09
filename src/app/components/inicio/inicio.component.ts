@@ -9,7 +9,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { BicicletaService } from '../../services/bicicleta.service';
 import { Bicicleta } from '../../model/bicicleta';
-import { RouterModule, Router } from '@angular/router'; // Se agrega Router para la navegación
+import { RouterModule, Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-inicio',
@@ -34,13 +34,22 @@ export class InicioComponent implements OnInit {
 
   filtroTexto: string = '';
   filtroTipo: string = 'Todos';
+  filtroMarca: string = 'Todas'; 
   
-  // Se usa 'Electrica' sin tilde para coincidir con el registro y la DB
+  precioMin: number | null = null;
+  precioMax: number | null = null;
+  
   tipos: string[] = ['Montaña', 'Ruta', 'Urbana', 'Electrica']; 
   
-  criterioOrden: string = 'defecto';
+  marcas: string[] = [
+    'GW', 'SCOOP', 'Shimano', 'MTB', 'Andantte', 
+    'Seven', 'Roadmaster', 'Profit', 'Sforzo', 
+    'Bianchi', 'Fusion', 'Cliff'
+  ];
 
-  // Se inyecta el Router en el constructor
+  criterioOrden: string = 'defecto';
+  esGridLargo: boolean = false;
+
   constructor(
     private biciService: BicicletaService,
     private router: Router 
@@ -48,6 +57,10 @@ export class InicioComponent implements OnInit {
 
   ngOnInit() {
     this.cargarBicicletas();
+  }
+
+  setVista(larga: boolean) {
+    this.esGridLargo = larga;
   }
 
   cargarBicicletas() {
@@ -60,7 +73,6 @@ export class InicioComponent implements OnInit {
     });
   }
 
-  // Función para navegar al detalle de la bicicleta
   verDetalle(id: number | undefined) {
     if (id) {
       this.router.navigate(['/bicicleta', id]);
@@ -69,6 +81,12 @@ export class InicioComponent implements OnInit {
 
   setFiltroTipo(tipo: string) {
     this.filtroTipo = tipo;
+    this.aplicarFiltros();
+    window.scrollTo({ top: 400, behavior: 'smooth' }); 
+  }
+
+  setFiltroMarca(marca: string) {
+    this.filtroMarca = marca;
     this.aplicarFiltros();
   }
 
@@ -87,12 +105,16 @@ export class InicioComponent implements OnInit {
     
     this.bicicletasFiltradas = this.bicicletas.filter(b => {
       const coincideTexto = `${b.marca} ${b.modelo}`.toLowerCase().includes(texto);
-      
-      // Compara tipos normalizando (quitando tildes) para evitar errores de coincidencia
       const coincideTipo = this.filtroTipo === 'Todos' || 
                            this.normalizar(b.tipo) === this.normalizar(this.filtroTipo);
+      const coincideMarca = this.filtroMarca === 'Todas' || 
+                            b.marca.toUpperCase().includes(this.filtroMarca.toUpperCase());
+
+      const precio = b.precioVenta;
+      const coincideMin = this.precioMin === null || this.precioMin === undefined || precio >= this.precioMin;
+      const coincideMax = this.precioMax === null || this.precioMax === undefined || precio <= this.precioMax;
       
-      return coincideTexto && coincideTipo;
+      return coincideTexto && coincideTipo && coincideMarca && (coincideMin && coincideMax);
     });
 
     if (this.criterioOrden !== 'defecto') {
@@ -102,39 +124,25 @@ export class InicioComponent implements OnInit {
 
   contarPorTipo(tipo: string): number {
     if (tipo === 'Todos') return this.bicicletas.length;
-    
-    const tipoBusqueda = this.normalizar(tipo);
-    return this.bicicletas.filter(b => this.normalizar(b.tipo) === tipoBusqueda).length;
+    return this.bicicletas.filter(b => this.normalizar(b.tipo) === this.normalizar(tipo)).length;
   }
 
-  // Función para estandarizar textos (quita tildes y pasa a minúsculas)
+  contarPorMarca(marca: string): number {
+    if (marca === 'Todas') return this.bicicletas.length;
+    return this.bicicletas.filter(b => b.marca.toUpperCase().includes(marca.toUpperCase())).length;
+  }
+
   private normalizar(texto: string): string {
     if (!texto) return '';
-    return texto.toLowerCase()
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "");
-  }
-
-  getBadgeClass(tipo: string): string {
-    const clases: any = {
-      'Montaña': 'badge-tipo-montana',
-      'Ruta': 'badge-tipo-ruta',
-      'Urbana': 'badge-tipo-urbana',
-      'Electrica': 'badge-tipo-electrica'
-    };
-    return clases[tipo] || '';
+    return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
 
   limpiarClase(texto: string): string {
     if (!texto) return '';
-    return texto.toLowerCase()
-                .trim()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .replace(/\s+/g, '-'); 
+    return texto.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-'); 
   }
 
   updateUrl(event: any) {
-    event.target.src = 'img/bicicletas/nantes.jpg'; // Ruta limpia
+    event.target.src = 'img/bicicletas/nantes.jpg'; 
   }
 }

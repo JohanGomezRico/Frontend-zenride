@@ -18,7 +18,7 @@
       <div class="status">
         <span class="stock-label">Disponibilidad:</span>
         <span class="stock-valor" [class.low]="bicicleta.stockActual < 3">
-          {{ bicicleta.stockActual }} unidades en stock
+          {{ bicicleta.stockActual }} unidades disponibles
         </span>
       </div>
 
@@ -43,13 +43,12 @@
       <button class="btn-accion" (click)="contactarVendedor()">CONTACTAR PARA COMPRA</button>
     </div>
   </div>
-
-  <div class="tienda-mapa">
-    <h3><mat-icon>location_on</mat-icon> Encuéntranos en Tienda</h3>
-    <p>{{ contacto.tienda }}</p>
-    <div class="map-container">
+<div class="tienda-mapa">
+  <h3><mat-icon>location_on</mat-icon> Encuéntranos en Tienda</h3>
+  <p>{{ contacto.tienda }}</p>
+  <div class="map-container">
 <iframe 
-  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3977.16523456789!2d-75.6681951!3d4.540976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e38f50000000000%3A0x0000000000000000!2sSENA%20Centro%20de%20Comercio%20y%20Turismo!5e0!3m2!1ses-419!2sco!4v1712285000000!5m2!1ses-419!2sco"
+  src="https://maps.google.com/maps?q=SENA%20Centro%20de%20Comercio%20y%20Turismo,%20Armenia,%20Quindio&hl=es&z=17&output=embed"
   width="100%" 
   height="350" 
   style="border:0; border-radius: 15px;" 
@@ -57,6 +56,6 @@
   loading="lazy" 
   referrerpolicy="no-referrer-when-downgrade">
 </iframe>
-    </div>
   </div>
+</div>
 </div>

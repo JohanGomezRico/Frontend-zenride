@@ -3,7 +3,6 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1 class="hero-title">Catálogo de Bicicletas</h1>
-      
       <div class="hero-categories">
         <div class="h-cat" [class.active]="filtroTipo === 'Todos'" (click)="setFiltroTipo('Todos')">
           <span class="h-cat-name">TODOS</span>
@@ -23,17 +22,20 @@
 
   <div class="content-layout">
     <aside class="sidebar">
-      <div class="search-box">
-        <mat-icon>search</mat-icon>
-        <input type="text" [(ngModel)]="filtroTexto" (input)="aplicarFiltros()" placeholder="Busca tu producto...">
-      </div>
+      <div class="sidebar-image-bg"></div> 
+      <div class="sidebar-overlay"></div>  
+      <div class="sidebar-content">
+        
+        <div class="search-box">
+          <mat-icon>search</mat-icon>
+          <input type="text" [(ngModel)]="filtroTexto" (input)="aplicarFiltros()" placeholder="Busca tu producto...">
+        </div>
 
-      <div class="filter-section">
         <h3 class="section-label">CATEGORÍAS</h3>
         <ul class="cat-list">
           <li (click)="setFiltroTipo('Todos')" [class.active]="filtroTipo === 'Todos'">
             <span class="dot grey"></span> 
-            <span class="cat-name">Todos</span> 
+            <span class="cat-name">Todos los modelos</span> 
             <span class="badge">{{ bicicletas.length }}</span>
           </li>
           <li *ngFor="let t of tipos" (click)="setFiltroTipo(t)" [class.active]="filtroTipo === t">
@@ -42,6 +44,28 @@
             <span class="badge">{{ contarPorTipo(t) }}</span>
           </li>
         </ul>
+
+        <h3 class="section-label" style="margin-top: 30px;">MARCAS</h3>
+        <div class="brand-scroll-box">
+          <ul class="cat-list">
+            <li (click)="setFiltroMarca('Todas')" [class.active]="filtroMarca === 'Todas'">
+              <span class="cat-name">Todas las marcas</span>
+              <span class="badge">{{ bicicletas.length }}</span>
+            </li>
+            <li *ngFor="let m of marcas" (click)="setFiltroMarca(m)" [class.active]="filtroMarca === m">
+              <span class="cat-name">{{ m }}</span>
+              <span class="badge">{{ contarPorMarca(m) }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <h3 class="section-label" style="margin-top: 30px;">RANGO DE PRECIO</h3>
+        <div class="price-inputs">
+          <input type="number" [(ngModel)]="precioMin" (input)="aplicarFiltros()" placeholder="Mínimo">
+          <span class="separator">-</span>
+          <input type="number" [(ngModel)]="precioMax" (input)="aplicarFiltros()" placeholder="Máximo">
+        </div>
+
       </div>
     </aside>
 
@@ -54,44 +78,34 @@
             <option value="menor">Precio: menor a mayor</option>
             <option value="mayor">Precio: mayor a menor</option>
           </select>
-
           <div class="view-icons">
-            <mat-icon class="active">grid_view</mat-icon>
-            <mat-icon>view_module</mat-icon>
+            <mat-icon [class.active]="!esGridLargo" (click)="setVista(false)">grid_view</mat-icon>
+            <mat-icon [class.active]="esGridLargo" (click)="setVista(true)">view_module</mat-icon>
           </div>
         </div>
       </div>
 
-      <div class="bici-grid">
+      <div class="bici-grid" [class.grid-largo]="esGridLargo">
         <div class="bici-card" *ngFor="let b of bicicletasFiltradas">
           <div class="card-header">
-            <span class="type-tag" [ngClass]="getBadgeClass(b.tipo)">{{ b.tipo | uppercase }}</span>
-            
-<img [src]="'img/bicicletas/' + limpiarClase(b.modelo) + '.jpg'" 
-     class="bici-img"
-     (error)="updateUrl($event)">
+            <span class="type-tag">{{ b.tipo | uppercase }}</span>
+            <img [src]="'img/bicicletas/' + limpiarClase(b.modelo) + '.jpg'" 
+                 class="bici-img" (error)="updateUrl($event)">
           </div>
-          
           <div class="card-body">
-            <span class="brand-small">{{ b.marca | uppercase }}</span>
             <h2 class="model-name">{{ b.modelo }}</h2>
             <p class="type-text">{{ b.tipo }} · {{ b.marca }}</p>
-            
             <div class="card-footer">
               <div class="price">{{ b.precioVenta | currency:'COP':'$':'1.0-0' }}</div>
               <div class="stock-container">
                 <span class="stock-val" [class.low]="b.stockActual < 3">{{ b.stockActual }}</span>
-                <span class="stock-label">EN STOCK</span>
+                <span class="stock-label">DISPONIBLES</span>
               </div>
             </div>
-            
             <button class="btn-details" (click)="verDetalle(b.id)">VER DETALLES</button>
           </div>
         </div>
       </div>
-
-      <div *ngIf="bicicletasFiltradas.length === 0" class="no-results">
-        <mat-icon>directions_bike</mat-icon>
-        <p>No encontramos bicicletas que coincidan con tu búsqueda.</p>
-      </div>
-    </main> </div> </div> ```
+    </main>
+  </div>
+</div>

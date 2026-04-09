@@ -133,17 +133,27 @@
     }
   }
 
-  .btn-finalizar {
+.btn-finalizar {
     padding: 15px;
     font-size: 1.1rem;
     font-weight: 800;
     border-radius: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    background-color: #000 !important;
     
+    /* CAMBIA ESTO */
+    background-color: #0f0f0f !important; // El verde éxito que usas arriba
+    color:#ccff00 !important;             // Texto en blanco para que resalte
+    
+    &:hover:not(:disabled) {
+      background-color: #a6a99a !important; // Un verde un poco más oscuro al pasar el mouse
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+    }
+
     &:disabled {
       background-color: #cbd5e1 !important;
+      color: #64748b !important;
     }
   }
 }
